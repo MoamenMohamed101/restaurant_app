@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/font_manager.dart';
 import 'package:restaurant_app/presentation/resources/styles_manager.dart';
@@ -19,7 +20,11 @@ ThemeData getApplicationTheme() {
     ),
     // appBar theme
     appBarTheme: AppBarTheme(
-      color: ColorManager.primaryColor,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: ColorManager.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      color: ColorManager.white,
       centerTitle: true,
       iconTheme: const IconThemeData(
         color: ColorManager.white,
@@ -48,7 +53,7 @@ ThemeData getApplicationTheme() {
         textStyle: getRegularTextStyle(
           color: ColorManager.white,
           fontSize: AppSize.s17,
-        ) as TextStyle?,
+        ),
       ),
     ),
     // text Theme
@@ -57,13 +62,15 @@ ThemeData getApplicationTheme() {
         color: ColorManager.white,
         fontSize: FontSizeManager.s22,
       ),
-      displayLarge: getLightTextStyle(
-        color: ColorManager.lightGrey,
-        fontSize: FontSizeManager.s22,
+      displayLarge: getSemiBoldTextStyle(
+        color: ColorManager.darkGrey,
+        fontSize: FontSizeManager.s16,
       ),
+      headlineMedium: getRegularTextStyle(
+          color: ColorManager.darkGrey, fontSize: FontSizeManager.s14),
       titleMedium: getMediumTextStyle(
-        color: ColorManager.lightGrey,
-        fontSize: FontSizeManager.s14,
+        color: ColorManager.primaryColor,
+        fontSize: FontSizeManager.s16,
       ),
       bodyLarge: getRegularTextStyle(color: ColorManager.grey1),
       bodySmall: getRegularTextStyle(color: ColorManager.grey),
@@ -72,12 +79,10 @@ ThemeData getApplicationTheme() {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(AppPadding.p8),
       hintStyle:
-          getRegularTextStyle(color: ColorManager.grey, fontSize: AppSize.s14)
-              as TextStyle?,
+          getRegularTextStyle(color: ColorManager.grey, fontSize: AppSize.s14),
       labelStyle:
-          getMediumTextStyle(color: ColorManager.grey, fontSize: AppSize.s14)
-              as TextStyle?,
-      errorStyle: getRegularTextStyle(color: ColorManager.error) as TextStyle?,
+          getMediumTextStyle(color: ColorManager.grey, fontSize: AppSize.s14),
+      errorStyle: getRegularTextStyle(color: ColorManager.error),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: ColorManager.grey,
