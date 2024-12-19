@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:restaurant_app/domain/models.dart';
+import 'package:restaurant_app/presentation/onBoarding/viewmodel/onBoarding_ViewModel.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/constants_manager.dart';
@@ -15,37 +17,31 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  List<OnBoardingModel> _onBoardingPages() => [
-        OnBoardingModel(
-          AppStrings.onBoardingTitle1,
-          AppStrings.onBoardingSubTitle1,
-          ImageAssets.onBoardingLogo1,
-        ),
-        OnBoardingModel(
-          AppStrings.onBoardingTitle2,
-          AppStrings.onBoardingSubTitle2,
-          ImageAssets.onBoardingLogo2,
-        ),
-        OnBoardingModel(
-          AppStrings.onBoardingTitle3,
-          AppStrings.onBoardingSubTitle3,
-          ImageAssets.onBoardingLogo3,
-        ),
-        OnBoardingModel(
-          AppStrings.onBoardingTitle4,
-          AppStrings.onBoardingSubTitle4,
-          ImageAssets.onBoardingLogo4,
-        ),
-      ];
-
-  late final List<OnBoardingModel> _pages = _onBoardingPages();
-
   final PageController _pageController = PageController();
+  final OnboardingViewmodel _onboardingViewmodel = OnboardingViewmodel();
 
-  int _currentPageIndex = 0;
+  _bind() {
+    _onboardingViewmodel.start();
+  }
+
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<OnBoardingSlidersViewObject>(
+      stream: _onboardingViewmodel.outputSliderViewObject,
+      builder: (BuildContext context, snapshot) => getContentWidget(snapshot.data)
+    );
+  }
+
+  Widget getContentWidget(OnBoardingSlidersViewObject? data) {
+    if (data == null) {
+      return Container();
+    }
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -56,13 +52,14 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         physics: const BouncingScrollPhysics(),
         controller: _pageController,
         onPageChanged: (index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
+          // setState(() {
+          //
+          // });
+          _onboardingViewmodel.onPageChanged(index);
         },
         itemBuilder: (BuildContext context, int index) =>
-            OnboardingPage(_pages[index]),
-        itemCount: _pages.length,
+            OnboardingPage(data.onBoardingModel),
+        itemCount: data.numberOfSlides,
       ),
       bottomSheet: Container(
         color: ColorManager.white,
@@ -81,14 +78,14 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 ),
               ),
             ),
-            _getBottomSheet(),
+            _getBottomSheet(data),
           ],
         ),
       ),
     );
   }
 
-  Widget _getBottomSheet() {
+  Widget _getBottomSheet(OnBoardingSlidersViewObject? data) {
     return Container(
       width: double.infinity,
       color: ColorManager.primaryColor,
@@ -100,7 +97,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             child: GestureDetector(
               onTap: () {
                 _pageController.animateToPage(
-                  _getPreviousIndex(),
+                  _onboardingViewmodel.goToPreviousPage(),
                   duration: const Duration(
                     milliseconds: AppConstants.sliderAnimationTime,
                   ),
@@ -116,10 +113,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           ),
           Row(
             children: [
-              for (int i = 0; i < _pages.length; i++)
+              for (int i = 0; i < data!.numberOfSlides; i++)
                 Padding(
                   padding: const EdgeInsets.all(AppSize.s8),
-                  child: _getProperCircle(i),
+                  child: _getProperCircle(i, data.currentIndex),
                 )
             ],
           ),
@@ -127,7 +124,13 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             padding: const EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
               onTap: () {
-                _pageController.animateToPage(_getNextPage(), duration: const Duration(milliseconds: AppConstants.sliderAnimationTime), curve: Curves.linear);
+                _pageController.animateToPage(
+                  _onboardingViewmodel.goToNextPage(),
+                  duration: const Duration(
+                    milliseconds: AppConstants.sliderAnimationTime,
+                  ),
+                  curve: Curves.linear,
+                );
               },
               child: SizedBox(
                 width: AppSize.s20,
@@ -141,23 +144,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index) {
-    if (index == _currentPageIndex) {
+  Widget _getProperCircle(int index, int currentIndex) {
+    if (index == currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircle);
     } else {
       return SvgPicture.asset(ImageAssets.solidCircle);
     }
   }
 
-  int _getPreviousIndex() {
-    int prev = --_currentPageIndex;
-    if (prev == - 1) return prev = _pages.length - 1;
-    return prev;
-  }
-
-  int _getNextPage() {
-    if(_currentPageIndex == _pages.length - 1) return _currentPageIndex = 0;
-    return ++_currentPageIndex;
+  @override
+  void dispose() {
+    _onboardingViewmodel.dispose();
+    super.dispose();
   }
 }
 
@@ -192,12 +190,4 @@ class OnboardingPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class OnBoardingModel {
-  String? title;
-  String? description;
-  String? image;
-
-  OnBoardingModel(this.title, this.description, this.image);
 }
