@@ -4,10 +4,16 @@ import 'package:restaurant_app/app/app.dart';
 void main() {
   runApp(MyApp());
 }
+
+// https://www.youtube.com/watch?v=LmQNheAUzfE Dart extension methods
+
+// https://www.youtube.com/watch?v=4siYxQVLNb8 Dart Factory Constructor
+
 // https://www.youtube.com/watch?v=mHVEErSjMD0 Singleton design pattern in dart
 
 // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 Hexadecimal color code for transparency
 
+// https://app.wiremock.cloud/mock-apis/wm9ok/stubs/57183709-c191-4152-9e2b-01c6d8a46e04
 
 // StreamController improves stream management between view and view model
 
