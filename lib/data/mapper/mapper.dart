@@ -1,7 +1,7 @@
 import 'package:restaurant_app/app/constants.dart';
 import 'package:restaurant_app/app/extensions.dart';
 import 'package:restaurant_app/data/response/responses.dart';
-import 'package:restaurant_app/domain/models.dart';
+import 'package:restaurant_app/domain/model/models.dart';
 
 // we use mapper to convert the response to domain model
 extension CustomerResponseMapper on CustomerResponse? {
@@ -28,6 +28,9 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
   Authentication toDomain() {
     // we use ?. to check if the object is null or not before converting it to domain model
     // if it's null, we return the default value
-    return Authentication(this?.customerResponse.toDomain(), this?.contactsResponse.toDomain());
+    return Authentication(
+      this?.customerResponse.toDomain(),
+      this?.contactsResponse.toDomain(),
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:restaurant_app/domain/models.dart';
+import 'package:restaurant_app/domain/model/models.dart';
 import 'package:restaurant_app/presentation/base/baseViewModel.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';

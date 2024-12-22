@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:restaurant_app/domain/models.dart';
+import 'package:restaurant_app/domain/model/models.dart';
 import 'package:restaurant_app/presentation/onBoarding/viewmodel/onBoarding_ViewModel.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
