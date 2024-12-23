@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:restaurant_app/app/app_pref.dart';
 import 'package:restaurant_app/app/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String APPLICATON_JSON = "application/json";
 const String CONTENT_TYPE = "content-type";
@@ -10,21 +12,26 @@ const String AUTHORIZATION = "authorization";
 const String LANGUAGE = "language";
 
 class DioFactory {
+  final AppPreferences _appPreferences;
+  DioFactory(this._appPreferences);
+
   Future<Dio> getDio() async {
     Dio dio = Dio();
-    int _timeout = 60 * 1000; // 60 seconds
+
+    String language = await _appPreferences.getAppLanguage();
+
     Map<String, String> header = {
       CONTENT_TYPE: APPLICATON_JSON,
       ACCEPT: APPLICATON_JSON,
-      AUTHORIZATION: "Send token here",
-      LANGUAGE: "en", // todo get language from app prefs
+      AUTHORIZATION: Constants.token,
+      LANGUAGE: language,
     };
     dio.options = BaseOptions(
       headers: header,
       receiveDataWhenStatusError: false,
       baseUrl: Constants.baseUrl,
-      sendTimeout: Duration(seconds: _timeout),
-      receiveTimeout: Duration(seconds: _timeout),
+      sendTimeout: const Duration(seconds: Constants.timeout),
+      receiveTimeout: const Duration(seconds: Constants.timeout),
     );
     if (!kReleaseMode) {
       dio.interceptors.add(
