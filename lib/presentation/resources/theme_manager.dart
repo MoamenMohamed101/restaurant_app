@@ -5,13 +5,15 @@ import 'package:restaurant_app/presentation/resources/font_manager.dart';
 import 'package:restaurant_app/presentation/resources/styles_manager.dart';
 import 'package:restaurant_app/presentation/resources/values_manager.dart';
 
+// This file is used to manage the theme of the application such as colors, text styles, etc.
 ThemeData getApplicationTheme() {
   return ThemeData(
     // main colors
     primaryColor: ColorManager.primaryColor,
     primaryColorLight: ColorManager.lightPrimary,
     primaryColorDark: ColorManager.darkPrimary,
-    disabledColor: ColorManager.grey1,
+    disabledColor: ColorManager.grey1, // what is disabled button? it is the color of the button when it is not clickable
+    splashColor: ColorManager.primaryColor, // what is splash color? it is the color of the button when it is clicked
     // card theme
     cardTheme: const CardTheme(
       color: ColorManager.white,
@@ -77,7 +79,7 @@ ThemeData getApplicationTheme() {
     ),
     // Input decoration theme
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.all(AppPadding.p8),
+      contentPadding: const EdgeInsets.all(AppPadding.p8), // padding of the input field
       hintStyle:
           getRegularTextStyle(color: ColorManager.grey, fontSize: AppSize.s14),
       labelStyle:

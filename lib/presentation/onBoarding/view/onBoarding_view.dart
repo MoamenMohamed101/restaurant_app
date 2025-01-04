@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:restaurant_app/domain/model/models.dart';
-import 'package:restaurant_app/presentation/onBoarding/viewmodel/onBoarding_ViewModel.dart';
+import 'package:restaurant_app/presentation/onBoarding/viewmodel/onboarding_view_model.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/constants_manager.dart';
@@ -22,7 +22,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   _bind() {
     _onboardingViewmodel.start();
-  }
+  } // Bind ربط the viewmodel to the view and start the viewmodel to get the data from the repository and update the view
 
   @override
   void initState() {
@@ -34,7 +34,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   Widget build(BuildContext context) {
     return StreamBuilder<OnBoardingSlidersViewObject>(
       stream: _onboardingViewmodel.outputSliderViewObject,
-      builder: (BuildContext context, snapshot) => getContentWidget(snapshot.data)
+      // Stream to listen to the data from the viewmodel and update the view
+      builder: (BuildContext context, snapshot) =>
+          getContentWidget(snapshot.data),
     );
   }
 
@@ -52,9 +54,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         physics: const BouncingScrollPhysics(),
         controller: _pageController,
         onPageChanged: (index) {
-          // setState(() {
-          //
-          // });
           _onboardingViewmodel.onPageChanged(index);
         },
         itemBuilder: (BuildContext context, int index) =>
@@ -144,13 +143,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index, int currentIndex) {
-    if (index == currentIndex) {
-      return SvgPicture.asset(ImageAssets.hollowCircle);
-    } else {
-      return SvgPicture.asset(ImageAssets.solidCircle);
-    }
-  }
+  Widget _getProperCircle(int index, int currentIndex) => index == currentIndex
+      ? SvgPicture.asset(ImageAssets.hollowCircle)
+      : SvgPicture.asset(ImageAssets.solidCircle);
 
   @override
   void dispose() {

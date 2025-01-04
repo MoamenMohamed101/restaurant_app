@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:restaurant_app/domain/model/models.dart';
-import 'package:restaurant_app/presentation/base/baseViewModel.dart';
+import 'package:restaurant_app/presentation/base/base_view_model.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 
@@ -101,6 +101,7 @@ abstract class OnboardingViewmodelInputs {
       get inputSliderViewObject; // make getter to override in OnboardingViewmodel
 }
 
+// outputs means the instructions that our view model will send to view
 abstract class OnboardingViewmodelOutputs {
   Stream<OnBoardingSlidersViewObject>
       get outputSliderViewObject; // make getter to override in OnboardingViewmodel

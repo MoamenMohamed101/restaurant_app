@@ -42,6 +42,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   @override
+  // why use dispose method? The dispose method is called when the state object is removed, which is when the widget is removed from the tree. This is the place to clean up resources, unsubscribe from streams, etc.
   void dispose() {
     // TODO: implement dispose
     _timer?.cancel();

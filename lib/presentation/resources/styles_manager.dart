@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/presentation/resources/font_manager.dart';
 
+// This file is used to manage the styles of the application such as text styles, colors, etc.
 TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
   return TextStyle(
     color: color,

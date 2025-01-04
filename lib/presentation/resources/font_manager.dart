@@ -4,6 +4,7 @@ class FontConstants {
   static const String fontFamily = 'Montserrat';
 }
 
+// These numbers is the same as the number in the pubspec.yaml file
 class FontWeightManager {
   static const FontWeight light = FontWeight.w300;
   static const FontWeight regular = FontWeight.w400;
@@ -12,6 +13,7 @@ class FontWeightManager {
   static const FontWeight bold = FontWeight.w700;
 }
 
+// These numbers are the sizes of all the fonts in the app
 class FontSizeManager {
   static const double s12 = 12;
   static const double s14 = 14;
