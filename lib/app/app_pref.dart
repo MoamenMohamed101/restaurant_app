@@ -1,7 +1,7 @@
 import 'package:restaurant_app/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String PRESS_KEY_LANGUAGE = "PRESS_KEY_LANGUAGE";
+const String PRESS_KEY_LANGUAGE = "PRESS_KEY_LANGUAGE";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;

@@ -10,5 +10,6 @@ class NetworkInfoImpl implements NetworkInfo {
   NetworkInfoImpl(this._internetConnectionChecker);
 
   @override
+  // This method returns true if the device is connected to the internet and false otherwise.
   Future<bool> get isConnected => _internetConnectionChecker.hasConnection;
 }

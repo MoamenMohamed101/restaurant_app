@@ -2,12 +2,12 @@ import 'package:restaurant_app/data/network/app_api.dart';
 import 'package:restaurant_app/data/network/requests.dart';
 import 'package:restaurant_app/data/response/responses.dart';
 
-// This is the abstract class for the remote data source that will be implemented in the data layer to get the data from the API.
+// It's interacts directly with the remote APIs (e.g., REST endpoints)
+// We make it return AuthenticationResponse because of this we make it in data layer
 abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequests loginRequests);
 }
 
-// This is the implementation of the remote data source.
 class RemoteDataSourceImpl implements RemoteDataSource {
   final AppServicesClient _appServicesClient;
 

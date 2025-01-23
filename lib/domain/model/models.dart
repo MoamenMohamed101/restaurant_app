@@ -34,7 +34,7 @@ class Contacts {
   Contacts(this.phone, this.email, this.link);
 }
 
-// string, double and int are punitive types so we don't need to make them nullable by default they are nullable in dart
+// string, double and int are primitive types so we don't need to make them nullable by default they are nullable in dart
 // But when we have a custom object like (Customer,Contacts) we need to make it nullable by default it's not nullable in dart
 class Authentication {
   Customer? customer;

@@ -3,7 +3,6 @@ import 'package:restaurant_app/app/extensions.dart';
 import 'package:restaurant_app/data/response/responses.dart';
 import 'package:restaurant_app/domain/model/models.dart';
 
-// we use mapper to convert the response to domain model
 extension CustomerResponseMapper on CustomerResponse? {
   Customer toDomain() {
     return Customer(
@@ -24,6 +23,7 @@ extension ContactsResponseMapper on ContactsResponse? {
   }
 }
 
+// we use mapper to convert the response to dart object model and this called (deserialization)
 extension AuthenticationResponseMapper on AuthenticationResponse? {
   Authentication toDomain() {
     // we use ?. to check if the object is null or not before converting it to domain model

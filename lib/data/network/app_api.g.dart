@@ -35,23 +35,26 @@ class _AppServicesClient implements AppServicesClient {
       'email': email,
       'password': password,
     };
-    final _options = _setStreamType<AuthenticationResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'customers/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
+    final _options = _setStreamType<AuthenticationResponse>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+      )
+          .compose(
+            _dio.options,
+            'customers/login',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(
             baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+              _dio.options.baseUrl,
+              baseUrl,
+            ),
+          ),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options); // _result contains Json data
     late AuthenticationResponse _value;
     try {
       _value = AuthenticationResponse.fromJson(_result.data!);
@@ -59,7 +62,7 @@ class _AppServicesClient implements AppServicesClient {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
-    return _value;
+    return _value; // is holding the deserialized data (from json)
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

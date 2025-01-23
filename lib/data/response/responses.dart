@@ -1,17 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'responses.g.dart';
 
-@JsonSerializable()
+@JsonSerializable() // to make from json and to json
+// We expect the response will be null because of this we add the ? to make it nullable
 class BaseResponse {
-  @JsonKey(name: "status")
+  @JsonKey(name: "status") // her we write the name of the key in the response
   int? status;
   @JsonKey(name: "message")
   String? message;
 }
 
 @JsonSerializable()
-class CustomerResponse {
+class CustomerResponse // this sub response will be inside the authentication response
+{
   @JsonKey(name: "id")
   String? id;
   @JsonKey(name: "name")
@@ -24,11 +25,12 @@ class CustomerResponse {
   factory CustomerResponse.fromJson(Map<String, dynamic> json) =>
       _$CustomerResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustomerResponseToJson(this);
+  Map<String, dynamic> toJson() => _$CustomerResponseToJson(this); // this refer to the class
 }
 
 @JsonSerializable()
-class ContactsResponse {
+class ContactsResponse // this sub response will be inside the authentication response
+{
   @JsonKey(name: "phone")
   String? phone;
   @JsonKey(name: "email")
@@ -41,11 +43,12 @@ class ContactsResponse {
   factory ContactsResponse.fromJson(Map<String, dynamic> json) =>
       _$ContactsResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ContactsResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ContactsResponseToJson(this); // this refer to the class
 }
 
 @JsonSerializable()
-class AuthenticationResponse extends BaseResponse {
+class AuthenticationResponse extends BaseResponse // this is the main response
+{
   @JsonKey(name: "customer")
   CustomerResponse? customerResponse;
   @JsonKey(name: "contacts")

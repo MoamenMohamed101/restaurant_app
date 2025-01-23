@@ -1,8 +1,11 @@
-enum LanguageType { ENGLISH, ARABIC }
+enum LanguageType {
+  ENGLISH,
+  ARABIC,
+}
 
-const String ENGLISH = "en";
-const String ARABIC = "ar";
+const String english = "en";
+const String arabic = "ar";
 
 extension LanguageTypeExtension on LanguageType {
-  String getValue() => this == LanguageType.ENGLISH ? ENGLISH : ARABIC;
+  String getValue() => this == LanguageType.ENGLISH ? english : arabic;
 }

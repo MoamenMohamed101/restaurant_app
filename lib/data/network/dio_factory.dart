@@ -32,6 +32,7 @@ class DioFactory {
       sendTimeout: const Duration(seconds: Constants.timeout),
       receiveTimeout: const Duration(seconds: Constants.timeout),
     );
+    // Add logger in debug mode only to log the request and response
     if (!kReleaseMode) {
       dio.interceptors.add(
         PrettyDioLogger(
@@ -42,7 +43,6 @@ class DioFactory {
       );
     }
     return dio;
-
   }
 }
 

@@ -1,0 +1,20 @@
+using this link we can create a mock Api for testing the response of the api in the app without the need to connect to the real api
+https://app.wiremock.cloud/mock-apis/wm9ok/stubs/57183709-c191-4152-9e2b-01c6d8a46e04
+
+Dio:
+  Send network requests (GET, POST, etc.).
+  Manage connection timeouts, retries, and other HTTP settings.
+  Handle response data.
+
+Retrofit automatically generates a concrete implementation called _AppServicesClient when you build your project.
+  It integrates with Dio to make HTTP requests.
+  This generated class handles all the network details, such as:
+    Setting headers.
+    Serializing request data (e.g., converting Dart objects to JSON).
+    Deserializing response data (e.g., converting JSON to Dart models).
+
+pretty_dio_logger: logs the request and response in
+
+build_runner: used to generate code from json and to json files
+
+HTTP response status codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
