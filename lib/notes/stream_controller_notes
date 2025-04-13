@@ -8,4 +8,4 @@ stream is the output of StreamController
 
 At the end of the stream we need to close the stream controller to avoid memory leak
 
-At the end of the stream may be there is a lot of listeners or 1 listener
+At the end of the stream may be there are a lot of listeners or 1 listener

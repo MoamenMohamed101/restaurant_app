@@ -10,7 +10,7 @@ class OnboardingViewmodel
         OnboardingViewmodelInputs,
         OnboardingViewmodelOutputs {
   // stream controller outputs
-  final StreamController _streamController =
+  final StreamController<OnBoardingSlidersViewObject> _streamController =
       StreamController<OnBoardingSlidersViewObject>();
 
   late final List<OnBoardingModel> _pages;

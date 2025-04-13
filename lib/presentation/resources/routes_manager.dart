@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/presentation/forget_password/forget_password_view.dart';
-import 'package:restaurant_app/presentation/login/login_view.dart';
+import 'package:restaurant_app/presentation/login/view/login_view.dart';
 import 'package:restaurant_app/presentation/main/main_view.dart';
 import 'package:restaurant_app/presentation/onBoarding/view/onBoarding_view.dart';
 import 'package:restaurant_app/presentation/register/register_view.dart';
