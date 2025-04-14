@@ -10,16 +10,19 @@ class LoginViewmodel
   final StreamController<String> _userEmailController =
           StreamController<String>.broadcast(),
       _passwordEmailController = StreamController<String>.broadcast();
+  final StreamController<void> _areAllInputsValidController =
+      StreamController<void>.broadcast();
 
   var loginObject = LoginObject("", "");
-  final LoginUseCase _loginUseCase;
+  // final LoginUseCase _loginUseCase;
 
-  LoginViewmodel(this._loginUseCase);
+  // LoginViewmodel(this._loginUseCase);
 
   @override
   void dispose() {
     _userEmailController.close();
     _passwordEmailController.close();
+    _areAllInputsValidController.close();
   }
 
   @override
@@ -29,6 +32,7 @@ class LoginViewmodel
   setUserEmail(String email) {
     inputEmail.add(email);
     loginObject = loginObject.copyWith(email: email);
+    _areAllInputsValidController.add(null);
     // The copyWith method allows creating a new instance with modified values without altering the original object.
   }
 
@@ -36,6 +40,7 @@ class LoginViewmodel
   setUserPassword(String password) {
     inputPassword.add(password);
     loginObject = loginObject.copyWith(password: password);
+    _areAllInputsValidController.add(null);
   }
 
   @override
@@ -65,22 +70,31 @@ class LoginViewmodel
   @override
   login() async {
     // we need here to make add async because we need to call the execute method which is async
-    (await _loginUseCase.execute(
-      LoginUseCaseInput(
-        loginObject.email,
-        loginObject.password,
-      ),
-    ))
-        .fold(
-      (failure) => debugPrint(
-          "The Failure code is ${failure.code} and The Failure message is ${failure.message}"),
-      (right) {
-        debugPrint(right.customer!.name);
-      },
-    );
+    // (await _loginUseCase.execute(
+    //   LoginUseCaseInput(
+    //     loginObject.email,
+    //     loginObject.password,
+    //   ),
+    // ))
+    //     .fold(
+    //   (failure) => debugPrint(
+    //       "The Failure code is ${failure.code} and The Failure message is ${failure.message}"),
+    //   (right) {
+    //     debugPrint(right.customer!.name);
+    //   },
+    // );
     // The fold method is used to handle the result of an Either type. It takes two functions as arguments: one for the left side (failure) and one for the right side (success). In this case, it handles the failure and success cases of the login use case execution.
   }
+
+  @override
+  Sink get inputAreAllInputsValid => _areAllInputsValidController.sink;
+
+  @override
+  Stream<bool> get outAreAllDataValid => _areAllInputsValidController.stream.map((_) => _areAllInputsValid());
+
+  bool _areAllInputsValid() => _isEmailValid(loginObject.email) && _isPasswordValid(loginObject.password);
 }
+
 abstract class LoginViewmodelInputs {
   setUserEmail(String email);
 
@@ -91,6 +105,8 @@ abstract class LoginViewmodelInputs {
   Sink get inputEmail;
 
   Sink get inputPassword;
+
+  Sink get inputAreAllInputsValid;
 }
 
 abstract class LoginViewmodelOutputs {
@@ -98,4 +114,6 @@ abstract class LoginViewmodelOutputs {
   Stream<bool> get outIsEmailValid;
 
   Stream<bool> get outIsPasswordValid;
+
+  Stream<bool> get outAreAllDataValid;
 }
