@@ -12,11 +12,11 @@ const String LANGUAGE = "language";
 
 class DioFactory {
   final AppPreferences _appPreferences;
+
   DioFactory(this._appPreferences);
 
   Future<Dio> getDio() async {
     Dio dio = Dio();
-
     String language = await _appPreferences.getAppLanguage();
 
     Map<String, String> header = {
@@ -33,13 +33,12 @@ class DioFactory {
       receiveTimeout: const Duration(seconds: Constants.timeout),
     );
     // Add logger in debug mode only to log the request and response
-    if (!kReleaseMode) {
+    if (kReleaseMode) {
+      print("release mode no logs");
+    } else {
       dio.interceptors.add(
         PrettyDioLogger(
-          requestBody: true,
-          requestHeader: true,
-          responseHeader: true,
-        ),
+            requestHeader: true, requestBody: true, responseHeader: true),
       );
     }
     return dio;

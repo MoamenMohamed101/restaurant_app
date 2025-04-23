@@ -1,11 +1,12 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/domain/usecase/login_usecase.dart';
 import 'package:restaurant_app/presentation/base/base_view_model.dart';
 import 'package:restaurant_app/presentation/common/freezed_data_classes.dart';
 
 //
-class LoginViewmodel
+class LoginViewModel
     implements BaseViewModel, LoginViewmodelInputs, LoginViewmodelOutputs {
   final StreamController<String> _userEmailController =
           StreamController<String>.broadcast(),
@@ -14,9 +15,9 @@ class LoginViewmodel
       StreamController<void>.broadcast();
 
   var loginObject = LoginObject("", "");
-  // final LoginUseCase _loginUseCase;
+  final LoginUseCase _loginUseCase;
 
-  // LoginViewmodel(this._loginUseCase);
+  LoginViewModel(this._loginUseCase);
 
   @override
   void dispose() {
@@ -70,19 +71,19 @@ class LoginViewmodel
   @override
   login() async {
     // we need here to make add async because we need to call the execute method which is async
-    // (await _loginUseCase.execute(
-    //   LoginUseCaseInput(
-    //     loginObject.email,
-    //     loginObject.password,
-    //   ),
-    // ))
-    //     .fold(
-    //   (failure) => debugPrint(
-    //       "The Failure code is ${failure.code} and The Failure message is ${failure.message}"),
-    //   (right) {
-    //     debugPrint(right.customer!.name);
-    //   },
-    // );
+    (await _loginUseCase.execute(
+      LoginUseCaseInput(
+        loginObject.email,
+        loginObject.password,
+      ),
+    ))
+        .fold(
+      (failure) => debugPrint(
+          "The Failure code is ${failure.code} and The Failure message is ${failure.message}"),
+      (success) {
+        debugPrint(success.customer!.name);
+      },
+    );
     // The fold method is used to handle the result of an Either type. It takes two functions as arguments: one for the left side (failure) and one for the right side (success). In this case, it handles the failure and success cases of the login use case execution.
   }
 
@@ -90,9 +91,12 @@ class LoginViewmodel
   Sink get inputAreAllInputsValid => _areAllInputsValidController.sink;
 
   @override
-  Stream<bool> get outAreAllDataValid => _areAllInputsValidController.stream.map((_) => _areAllInputsValid());
+  Stream<bool> get outAreAllDataValid =>
+      _areAllInputsValidController.stream.map((_) => _areAllInputsValid());
 
-  bool _areAllInputsValid() => _isEmailValid(loginObject.email) && _isPasswordValid(loginObject.password);
+  bool _areAllInputsValid() =>
+      _isEmailValid(loginObject.email) &&
+      _isPasswordValid(loginObject.password);
 }
 
 abstract class LoginViewmodelInputs {

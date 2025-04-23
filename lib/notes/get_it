@@ -1,0 +1,8 @@
+registerSingleton: This method registers a singleton instance of the class. The instance will be created when the app starts and will be used throughout the app.
+registerFactory: This method registers a factory instance of the class. A new instance will be created every time it's needed.
+registerLazySingleton: This method registers a singleton instance of the class. The instance will be created only when it's needed for the first time, and the same instance will be used throughout the app.
+
+
+Get it stores dependencies in an internal data structure (like a Map<Type, Object>) and allows you to access them from anywhere in your code using the type as a key.
+
+The dependencies are registered with a type, and you can retrieve them using the type as a key

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/routes_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/resources/values_manager.dart';
-
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -18,7 +18,8 @@ class _LoginViewState extends State<LoginView> {
       _passwordController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
 
-  final LoginViewmodel _loginViewmodel = LoginViewmodel();
+  // final _loginViewmodel = instance<LoginViewModel>();
+  final LoginViewModel _loginViewmodel = instance<LoginViewModel>();
 
   _bind() {
     _loginViewmodel.start();
@@ -82,14 +83,16 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, Routes.forgetPasswordRoute),
+                        onPressed: () => Navigator.pushReplacementNamed(
+                            context, Routes.forgetPasswordRoute),
                         child: Text(
                           AppStrings.forgetPassword,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pushReplacementNamed(context, Routes.registerRoute),
+                        onPressed: () => Navigator.pushReplacementNamed(
+                            context, Routes.registerRoute),
                         child: Text(
                           AppStrings.registerText,
                           style: Theme.of(context).textTheme.titleMedium,
@@ -117,8 +120,7 @@ class _LoginViewState extends State<LoginView> {
             height: AppSize.s40,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () =>
-                  snapshot.data ?? false ? _loginViewmodel.login() : null,
+              onPressed: () => snapshot.data ?? false ? _loginViewmodel.login() : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: snapshot.data ?? false
                     ? ColorManager.primaryColor
