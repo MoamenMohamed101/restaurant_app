@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
+import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:restaurant_app/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/routes_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/resources/values_manager.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -23,6 +25,9 @@ class _LoginViewState extends State<LoginView> {
 
   _bind() {
     _loginViewmodel.start();
+    _loginViewmodel.outputState.listen((state) {
+      print("State emitted: $state");
+    });
     // The addListener method is used to "listen" for changes to the text in these controllers. When the text changes, the listener will be triggered and the view model will be updated accordingly.
     updatingEmailAndPasswordValues();
   }
@@ -36,8 +41,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
-    super.initState();
     _bind();
+    super.initState();
   }
 
   @override
@@ -51,13 +56,18 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return getContentWidget();
-  }
-
-  Widget getContentWidget() {
     return Scaffold(
       backgroundColor: ColorManager.white,
-      body: Container(
+      body: StreamBuilder<FlowState>(
+        stream: _loginViewmodel.outputState,
+        builder: (context, snapshot) =>
+            snapshot.data?.getStateWidget(context, getContentWidget(), () => _loginViewmodel.login()) ??
+            getContentWidget(),
+      ),
+    );
+  }
+
+  Widget getContentWidget() => Container(
         padding: const EdgeInsetsDirectional.only(
           top: AppPadding.p100,
         ),
@@ -105,9 +115,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   Padding loginButton() {
     return Padding(
@@ -120,7 +128,9 @@ class _LoginViewState extends State<LoginView> {
             height: AppSize.s40,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => snapshot.data ?? false ? _loginViewmodel.login() : null,
+              onPressed: () => snapshot.data ?? false
+                  ? _loginViewmodel.login()
+                  : null, // if snapshot.data is true, call the login method
               style: ElevatedButton.styleFrom(
                 backgroundColor: snapshot.data ?? false
                     ? ColorManager.primaryColor

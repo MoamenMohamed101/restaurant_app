@@ -4,11 +4,7 @@ import 'package:restaurant_app/presentation/base/base_view_model.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 
-class OnboardingViewmodel
-    implements
-        BaseViewModel,
-        OnboardingViewmodelInputs,
-        OnboardingViewmodelOutputs {
+class OnboardingViewmodel extends BaseViewModel implements OnboardingViewmodelInputs, OnboardingViewmodelOutputs {
   // stream controller outputs
   final StreamController<OnBoardingSlidersViewObject> _streamController =
       StreamController<OnBoardingSlidersViewObject>();

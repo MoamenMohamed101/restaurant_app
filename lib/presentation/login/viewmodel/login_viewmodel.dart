@@ -1,13 +1,12 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:restaurant_app/domain/usecase/login_usecase.dart';
 import 'package:restaurant_app/presentation/base/base_view_model.dart';
 import 'package:restaurant_app/presentation/common/freezed_data_classes.dart';
+import 'package:restaurant_app/presentation/common/state_renderer/state_renderer.dart';
+import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
 
-//
-class LoginViewModel
-    implements BaseViewModel, LoginViewmodelInputs, LoginViewmodelOutputs {
+class LoginViewModel extends BaseViewModel
+    implements LoginViewmodelInputs, LoginViewmodelOutputs {
   final StreamController<String> _userEmailController =
           StreamController<String>.broadcast(),
       _passwordEmailController = StreamController<String>.broadcast();
@@ -21,13 +20,17 @@ class LoginViewModel
 
   @override
   void dispose() {
+    super.dispose();
     _userEmailController.close();
     _passwordEmailController.close();
     _areAllInputsValidController.close();
   }
 
   @override
-  void start() {}
+  void start() {
+    // view model should tell view please show content state at first
+    inputState.add(ContentState());
+  }
 
   @override
   setUserEmail(String email) {
@@ -70,6 +73,7 @@ class LoginViewModel
 
   @override
   login() async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.popUpLoadingState));
     // we need here to make add async because we need to call the execute method which is async
     (await _loginUseCase.execute(
       LoginUseCaseInput(
@@ -78,10 +82,20 @@ class LoginViewModel
       ),
     ))
         .fold(
-      (failure) => debugPrint(
-          "The Failure code is ${failure.code} and The Failure message is ${failure.message}"),
+      (failure) {
+        inputState.add(
+          ErrorState(
+            StateRendererType.popUpErrorState,
+            failure.message,
+          ),
+        );
+        // debugPrint("The Failure code is ${failure.code} and The Failure message is ${failure.message}");
+      },
       (success) {
-        debugPrint(success.customer!.name);
+        inputState.add(
+          ContentState(),
+        );
+        // debugPrint(success.customer!.name);
       },
     );
     // The fold method is used to handle the result of an Either type. It takes two functions as arguments: one for the left side (failure) and one for the right side (success). In this case, it handles the failure and success cases of the login use case execution.

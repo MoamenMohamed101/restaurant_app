@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/font_manager.dart';
@@ -16,11 +17,14 @@ enum StateRendererType {
   contentState,
 }
 
+// This widget is used to display different states of the application, such as loading, error, and empty states.
 class StateRenderer extends StatelessWidget {
-  final StateRendererType stateRendererType;
-  final String message;
-  final String title;
-  final Function retryActionFunction;
+  final StateRendererType
+      stateRendererType; // The type of state to display specific ui depend on the state
+  final String message; // The message to display in the state
+  final String title; // The title to display in the state
+  final Function
+      retryActionFunction; // The function to call when the user retries an action
 
   const StateRenderer({
     super.key,
@@ -38,9 +42,10 @@ class StateRenderer extends StatelessWidget {
       StateRendererType stateRendererType, BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.popUpLoadingState:
-        return _getPopUpDialog(context, [_getAnimatedImage(JsonAssets.loadingState)]);
+        return _getPopUpDialog(
+            context, [_getAnimatedImage(JsonAssets.loadingState)]);
       case StateRendererType.popUpErrorState:
-        return _getItemsColum([
+        return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.errorState),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context),
