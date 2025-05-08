@@ -11,6 +11,7 @@ import 'package:restaurant_app/presentation/resources/values_manager.dart';
 enum StateRendererType {
   popUpLoadingState,
   popUpErrorState,
+  popUpSuccessState,
   fullScreenLoadingState,
   fullScreenErrorState,
   fullScreenEmptyState,
@@ -68,6 +69,13 @@ class StateRenderer extends StatelessWidget {
         ]);
       case StateRendererType.contentState:
         return Container();
+      case StateRendererType.popUpSuccessState:
+        return _getPopUpDialog(context, [
+          _getAnimatedImage(JsonAssets.successState),
+          _getMessage(title),
+          _getMessage(message),
+          _getRetryButton(AppStrings.ok, context),
+        ]);
     }
   }
 

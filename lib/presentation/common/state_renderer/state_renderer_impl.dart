@@ -59,6 +59,18 @@ class EmptyState extends FlowState {
   String getMessage() => message;
 }
 
+class SuccessState extends FlowState {
+  String message;
+
+  SuccessState(this.message);
+
+  @override
+  StateRendererType getStateRendererType() => StateRendererType.popUpSuccessState;
+
+  @override
+  String getMessage() => message;
+}
+
 extension FlowStateExtension on FlowState {
   // This method returns a widget based on the current state of the application.
   Widget getStateWidget(BuildContext context, Widget contentScreen,
@@ -97,6 +109,10 @@ extension FlowStateExtension on FlowState {
           retryActionFunction: () {},
           message: getMessage(),
         );
+        case SuccessState _:
+        showPopup(context, getStateRendererType(), getMessage(),title: AppStrings.success);
+        Navigator.pop(context);
+        return contentScreen;
       default:
         dismissDialog(context);
         return contentScreen;
@@ -116,7 +132,7 @@ extension FlowStateExtension on FlowState {
 
   // rootNavigator: true is used to dismiss the dialog from the root of the widget tree, ensuring that it closes even if there are nested navigators.
   showPopup(BuildContext context, StateRendererType stateRendererType,
-      String message) {
+      String message, {String title = Constants.empty}) {
     WidgetsBinding.instance.addPostFrameCallback(
       // for executing code after the UI has been fully rendered
       (_) => showDialog(
@@ -124,6 +140,7 @@ extension FlowStateExtension on FlowState {
         builder: (BuildContext context) => StateRenderer(
           stateRendererType: stateRendererType,
           message: message,
+          title: title,
           retryActionFunction: () {},
         ),
       ),
