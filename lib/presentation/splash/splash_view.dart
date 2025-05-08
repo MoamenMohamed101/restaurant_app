@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/app/app_pref.dart';
+import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/constants_manager.dart';
@@ -16,13 +16,31 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Timer? _timer;
+  final _appPreferences = instance<AppPreferences>();
 
-  _goNext() {
-    Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+  void _goNext() async {
+    final isLoggedIn = await _appPreferences.isUserLoggedIn();
+    final isOnBoardingScreenView = await _appPreferences.isOnBoardingScreenView();
+    if (isLoggedIn) {
+      goToMainScreen();
+    } else {
+      if (isOnBoardingScreenView) {
+        goToLoginScreen();
+      } else {
+        goToOnBoardingScreen();
+      }
+    }
   }
 
+  Future<Object?> goToOnBoardingScreen() => Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+
+  Future<Object?> goToLoginScreen() => Navigator.pushReplacementNamed(context, Routes.loginRoute);
+
+  Future<Object?> goToMainScreen() => Navigator.pushReplacementNamed(context, Routes.mainRoute);
+
   _startDelay() {
-    _timer = Timer(const Duration(seconds: AppConstants.timerDuration), _goNext);
+    _timer =
+        Timer(const Duration(seconds: AppConstants.timerDuration), _goNext);
   }
 
   @override
@@ -30,6 +48,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     _startDelay();
   }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

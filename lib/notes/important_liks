@@ -6,3 +6,5 @@ https://www.youtube.com/watch?v=LmQNheAUzfE
 Dart extension methods: Adding new methods to existing classes
 
 https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 Hexadecimal color code for transparency
+
+SchedulerBinding vs WidgetsBinding: https://medium.com/flutterworld/flutter-schedulerbinding-vs-widgetsbinding-149c71cb607f

@@ -12,6 +12,7 @@ class LoginViewModel extends BaseViewModel
       _passwordEmailController = StreamController<String>.broadcast();
   final StreamController<void> _areAllInputsValidController =
       StreamController<void>.broadcast();
+  final StreamController<bool> isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
 
   var loginObject = LoginObject("", "");
   final LoginUseCase _loginUseCase;
@@ -24,6 +25,7 @@ class LoginViewModel extends BaseViewModel
     _userEmailController.close();
     _passwordEmailController.close();
     _areAllInputsValidController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
@@ -73,7 +75,8 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    inputState.add(LoadingState(stateRendererType: StateRendererType.popUpLoadingState));
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.popUpLoadingState));
     // we need here to make add async because we need to call the execute method which is async
     (await _loginUseCase.execute(
       LoginUseCaseInput(
@@ -95,7 +98,7 @@ class LoginViewModel extends BaseViewModel
         inputState.add(
           ContentState(),
         );
-        // debugPrint(success.customer!.name);
+        isUserLoggedInSuccessfullyStreamController.add(true);
       },
     );
     // The fold method is used to handle the result of an Either type. It takes two functions as arguments: one for the left side (failure) and one for the right side (success). In this case, it handles the failure and success cases of the login use case execution.

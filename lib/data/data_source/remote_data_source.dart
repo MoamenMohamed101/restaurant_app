@@ -6,6 +6,7 @@ import 'package:restaurant_app/data/response/responses.dart';
 // We make it return AuthenticationResponse because of this we make it in data layer
 abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequests loginRequests);
+  Future<ForgetPasswordResponse> resetPassword(String email);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -19,5 +20,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       loginRequests.email,
       loginRequests.password,
     );
+  }
+
+  @override
+  Future<ForgetPasswordResponse> resetPassword(String email)async {
+    return await _appServicesClient.resetPassword(email);
   }
 }

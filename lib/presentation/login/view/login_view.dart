@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:restaurant_app/app/app_pref.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:restaurant_app/presentation/login/viewmodel/login_viewmodel.dart';
@@ -22,27 +24,40 @@ class _LoginViewState extends State<LoginView> {
 
   // final _loginViewmodel = instance<LoginViewModel>();
   final LoginViewModel _loginViewmodel = instance<LoginViewModel>();
-
-  _bind() {
-    _loginViewmodel.start();
-    _loginViewmodel.outputState.listen((state) {
-      print("State emitted: $state");
-    });
-    // The addListener method is used to "listen" for changes to the text in these controllers. When the text changes, the listener will be triggered and the view model will be updated accordingly.
-    updatingEmailAndPasswordValues();
-  }
-
-  void updatingEmailAndPasswordValues() {
-    _emailController
-        .addListener(() => _loginViewmodel.setUserEmail(_emailController.text));
-    _passwordController.addListener(
-        () => _loginViewmodel.setUserPassword(_passwordController.text));
-  }
+  final _appPreferences = instance<AppPreferences>();
 
   @override
   void initState() {
     _bind();
     super.initState();
+  }
+
+  _bind() {
+    _loginViewmodel.start();
+    _loginViewmodel.outputState.listen((state) => debugPrint("State emitted: $state"));
+    // The addListener method is used to "listen" for changes to the text in these controllers. When the text changes, the listener will be triggered and the view model will be updated accordingly.
+    updatingEmailAndPasswordValues();
+    isCredentialsCorrect();
+  }
+
+  void updatingEmailAndPasswordValues() {
+    _emailController.addListener(() => _loginViewmodel.setUserEmail(_emailController.text));
+    _passwordController.addListener(() => _loginViewmodel.setUserPassword(_passwordController.text));
+  }
+
+  void isCredentialsCorrect() {
+    _loginViewmodel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isUserLoggedInSuccessfully) {
+      if (isUserLoggedInSuccessfully) {
+        navigateToMainScreenAndSaveInCacheMemory();
+      }
+    });
+  }
+
+  // SchedulerBinding: This is a class that provides access to the current scheduler, which is responsible for managing the frame rendering and scheduling tasks in Flutter.
+  void navigateToMainScreenAndSaveInCacheMemory() {
+    SchedulerBinding.instance.addPostFrameCallback((_) => Navigator.of(context).pushReplacementNamed(Routes.mainRoute));
+    _appPreferences.setUserLoggedIn();
   }
 
   @override
@@ -61,7 +76,8 @@ class _LoginViewState extends State<LoginView> {
       body: StreamBuilder<FlowState>(
         stream: _loginViewmodel.outputState,
         builder: (context, snapshot) =>
-            snapshot.data?.getStateWidget(context, getContentWidget(), () => _loginViewmodel.login()) ??
+            snapshot.data?.getStateWidget(
+                context, getContentWidget(), () => _loginViewmodel.login()) ??
             getContentWidget(),
       ),
     );
@@ -93,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.pushReplacementNamed(
+                        onPressed: () => Navigator.pushNamed(
                             context, Routes.forgetPasswordRoute),
                         child: Text(
                           AppStrings.forgetPassword,
@@ -101,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pushReplacementNamed(
+                        onPressed: () => Navigator.pushNamed(
                             context, Routes.registerRoute),
                         child: Text(
                           AppStrings.registerText,
@@ -128,17 +144,9 @@ class _LoginViewState extends State<LoginView> {
             height: AppSize.s40,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => snapshot.data ?? false
-                  ? _loginViewmodel.login()
+              onPressed: (snapshot.data ?? false)
+                  ? () => _loginViewmodel.login()
                   : null, // if snapshot.data is true, call the login method
-              style: ElevatedButton.styleFrom(
-                backgroundColor: snapshot.data ?? false
-                    ? ColorManager.primaryColor
-                    : ColorManager.grey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSize.s12),
-                ),
-              ),
               child: const Text(AppStrings.login),
             ),
           );
@@ -159,7 +167,6 @@ class _LoginViewState extends State<LoginView> {
               labelText: AppStrings.password,
               errorText:
                   (snapshot.data ?? true) ? null : AppStrings.passwordError,
-              // if snapshot.data is true, return null to hide the error, if not return AppStrings.userNameError
               hintText: AppStrings.password,
               icon: const Icon(Icons.password),
             ),
@@ -186,11 +193,11 @@ class _LoginViewState extends State<LoginView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.userName,
+              labelText: AppStrings.userEmail,
               errorText:
-                  (snapshot.data ?? true) ? null : AppStrings.userNameError,
+                  (snapshot.data ?? true) ? null : AppStrings.userEmailError,
               // if snapshot.data is true, return null to hide the error, if not return AppStrings.userNameError
-              hintText: AppStrings.userName,
+              hintText: AppStrings.userEmail,
               icon: const Icon(Icons.email),
             ),
             controller: _emailController,

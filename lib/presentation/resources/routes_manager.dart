@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
-import 'package:restaurant_app/presentation/forget_password/forget_password_view.dart';
+import 'package:restaurant_app/presentation/forget_password/view/forget_password_view.dart';
 import 'package:restaurant_app/presentation/login/view/login_view.dart';
 import 'package:restaurant_app/presentation/main/main_view.dart';
 import 'package:restaurant_app/presentation/onBoarding/view/onBoarding_view.dart';
@@ -39,6 +39,7 @@ class RouteGenerator {
           builder: (BuildContext context) => const RegisterView(),
         );
       case Routes.forgetPasswordRoute:
+        initForgetPasswordModule();
         return MaterialPageRoute(
           builder: (BuildContext context) => const ForgetPasswordView(),
         );

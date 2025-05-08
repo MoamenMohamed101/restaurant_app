@@ -52,13 +52,15 @@ import 'package:restaurant_app/domain/repository/repository.dart';
 // }
 
 class RepositoryImpl extends Repository {
-  final RemoteDataSource _remoteDataSource; // Used to get the response from the remote data source
+  final RemoteDataSource
+      _remoteDataSource; // Used to get the response from the remote data source
   final NetworkInfo _networkInfo; // The network info
 
   RepositoryImpl(this._remoteDataSource, this._networkInfo);
 
   @override
-  Future<Either<Failure, Authentication>> login(LoginRequests loginRequests) async {
+  Future<Either<Failure, Authentication>> login(
+      LoginRequests loginRequests) async {
     if (await isConnected()) {
       return await _handleLoginRequest(loginRequests);
     } else {
@@ -70,9 +72,10 @@ class RepositoryImpl extends Repository {
   Future<bool> isConnected() async => await _networkInfo.isConnected;
 
   // Handles the login API request and response processing
-  Future<Either<Failure, Authentication>> _handleLoginRequest(LoginRequests loginRequests) async {
+  Future<Either<Failure, Authentication>> _handleLoginRequest( LoginRequests loginRequests) async {
     try {
-      final AuthenticationResponse response = await _remoteDataSource.login(loginRequests);
+      final AuthenticationResponse response =
+          await _remoteDataSource.login(loginRequests);
       return _processLoginResponse(response);
     } catch (error) {
       return Left(ErrorHandler.handel(error).failure);
@@ -80,19 +83,56 @@ class RepositoryImpl extends Repository {
   }
 
   // Processes the API response and determines success or failure
-  Either<Failure, Authentication> _processLoginResponse(AuthenticationResponse response) {
-    if (isSuccessful(response)) {
+  Either<Failure, Authentication> _processLoginResponse(
+      AuthenticationResponse response) {
+    if (isSuccessfulLogin(response)) {
       return Right(response.toDomain()); // Convert to domain model
     } else {
-      return Left(_createFailureFromResponse(response));
+      return Left(_createFailureFromAuthenticationResponse(response));
     }
   }
 
   // Checks if the response indicates a successful operation
-  bool isSuccessful(AuthenticationResponse response) => response.status == ApiInternalStatus.success;
+  bool isSuccessfulLogin(AuthenticationResponse response) =>
+      response.status == ApiInternalStatus.success;
 
   // Creates a Failure object from an unsuccessful response
-  Failure _createFailureFromResponse(AuthenticationResponse response) {
+  Failure _createFailureFromAuthenticationResponse(AuthenticationResponse response) {
+    return Failure(
+      ApiInternalStatus.failure,
+      response.message ?? ResponseMessage.defaultError,
+    );
+  }
+
+  @override
+  Future<Either<Failure, String>> resetPassword(String email) async {
+    if (await isConnected()) {
+      return await _handleForgetPasswordRequest(email);
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  Future<Either<Failure, String>> _handleForgetPasswordRequest(String email) async {
+    try {
+      final ForgetPasswordResponse response = await _remoteDataSource.resetPassword(email);
+      return _processForgetPasswordResponse(response);
+    } catch (error) {
+      return Left(ErrorHandler.handel(error).failure);
+    }
+  }
+
+  Either<Failure, String> _processForgetPasswordResponse(ForgetPasswordResponse response) {
+    if (isSuccessReset(response)) {
+      return Right(response.toDomain());
+    } else {
+      return Left(_createFailureFromForgetPasswordResponse(response));
+    }
+  }
+
+  bool isSuccessReset(ForgetPasswordResponse response) => response.status == ApiInternalStatus.success;
+
+  Failure _createFailureFromForgetPasswordResponse(ForgetPasswordResponse response) {
     return Failure(
       ApiInternalStatus.failure,
       response.message ?? ResponseMessage.defaultError,

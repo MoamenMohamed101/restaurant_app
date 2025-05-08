@@ -144,7 +144,8 @@ class _$LoginObjectImpl implements _LoginObject {
 }
 
 abstract class _LoginObject implements LoginObject {
-  factory _LoginObject(final String email, final String password) = _$LoginObjectImpl;
+  factory _LoginObject(final String email, final String password) =
+      _$LoginObjectImpl;
 
   @override
   String get email;
@@ -155,5 +156,6 @@ abstract class _LoginObject implements LoginObject {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

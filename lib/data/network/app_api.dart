@@ -10,13 +10,17 @@ part 'app_api.g.dart';
 // Design the request of the api in this file
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class AppServicesClient {
-  factory AppServicesClient(Dio dio, {String? baseUrl}) = _AppServicesClient; // redirecting factory constructor
+  factory AppServicesClient(Dio dio, {String? baseUrl}) =
+      _AppServicesClient; // redirecting factory constructor
 
   @POST("/customers/login") // the endpoint of authentication
   Future<AuthenticationResponse> login(
     @Field("email") String email,
     @Field("password") String password,
   );
+
+  @POST("/customers/forgetPassword") // the endpoint of forget password
+  Future<ForgetPasswordResponse> resetPassword(@Field("email") String email);
 }
 
 /*

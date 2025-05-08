@@ -7,4 +7,5 @@ import 'package:restaurant_app/domain/model/models.dart';
 // We make it return Authentication object not AuthenticationResponse because we need to convert it to domain model
 abstract class Repository {
   Future<Either<Failure, Authentication>> login(LoginRequests loginRequests);
+  Future<Either<Failure, String>> resetPassword(String email);
 }

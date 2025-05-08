@@ -8,7 +8,9 @@ import 'package:restaurant_app/data/network/dio_factory.dart';
 import 'package:restaurant_app/data/network/network_info.dart';
 import 'package:restaurant_app/data/repository/repository.dart';
 import 'package:restaurant_app/domain/repository/repository.dart';
+import 'package:restaurant_app/domain/usecase/forget_password_usecase.dart';
 import 'package:restaurant_app/domain/usecase/login_usecase.dart';
+import 'package:restaurant_app/presentation/forget_password/viewmodel/forget_password_viewmodel.dart';
 import 'package:restaurant_app/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,5 +44,18 @@ initLoginModule() {
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(
           instance<LoginUseCase>(),
         ));
+  }
+}
+
+// This function has all the dependencies that are used in the login module.
+initForgetPasswordModule() {
+  if (!GetIt.I.isRegistered<ForgetPasswordUsecase>()) // This line checks if the LoginUseCase is already registered in the GetIt instance.
+      {
+    instance.registerFactory<ForgetPasswordUsecase>(
+            () => ForgetPasswordUsecase(instance<Repository>()));
+
+    instance.registerFactory<ForgetPasswordViewmodel>(() => ForgetPasswordViewmodel(
+      instance<ForgetPasswordUsecase>(),
+    ));
   }
 }

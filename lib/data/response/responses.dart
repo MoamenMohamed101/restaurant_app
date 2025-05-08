@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'responses.g.dart';
+
 // Design the response of the api in this file
 @JsonSerializable()
 // We expect the response will be null because of this we add the ? to make it nullable
@@ -22,7 +24,8 @@ class CustomerResponse // this sub response will be inside the authentication re
 
   CustomerResponse(this.id, this.name, this.numberOfNotification);
 
-  factory CustomerResponse.fromJson(Map<String, dynamic> json) => _$CustomerResponseFromJson(json);
+  factory CustomerResponse.fromJson(Map<String, dynamic> json) =>
+      _$CustomerResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CustomerResponseToJson(this);
 }
@@ -42,8 +45,7 @@ class ContactsResponse // this sub response will be inside the authentication re
   factory ContactsResponse.fromJson(Map<String, dynamic> json) =>
       _$ContactsResponseFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      _$ContactsResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ContactsResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -60,6 +62,19 @@ class AuthenticationResponse extends BaseResponse // this is the main response
       _$AuthenticationResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthenticationResponseToJson(this);
+}
+
+@JsonSerializable()
+class ForgetPasswordResponse extends BaseResponse {
+  @JsonKey(name: "support")
+  String? support;
+
+  ForgetPasswordResponse(this.support);
+
+  factory ForgetPasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ForgetPasswordResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ForgetPasswordResponseToJson(this);
 }
 
 /*

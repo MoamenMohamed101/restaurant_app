@@ -12,8 +12,8 @@ class AppStrings {
   static const String onBoardingSubTitle3 =
       "Tut app is an awesome flutter application using clean architecture #3";
   static const String onBoardingSubTitle4 = "Tut app is an awesome flutter application using clean architecture #4";
-  static const String userName = "username";
-  static const String userNameError = "Please enter a valid username";
+  static const String userEmail = "user email";
+  static const String userEmailError = "Please enter a valid email";
   static const String password = "password";
   static const String passwordError = "Please enter a valid password";
   static const String login = "Login";
@@ -23,4 +23,5 @@ class AppStrings {
   static const String loadingLogin = "Loading....";
   static const String retryAgain = "Retry Again";
   static const String ok = "OK";
+  static const String resetPassword = "Reset Password";
 }

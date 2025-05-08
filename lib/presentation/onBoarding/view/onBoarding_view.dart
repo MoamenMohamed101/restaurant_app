@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:restaurant_app/app/app_pref.dart';
+import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/domain/model/models.dart';
 import 'package:restaurant_app/presentation/onBoarding/viewmodel/onboarding_view_model.dart';
 import 'package:restaurant_app/presentation/resources/assets_manager.dart';
@@ -19,10 +21,9 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController();
   final OnboardingViewmodel _onboardingViewmodel = OnboardingViewmodel();
-
-  _bind() {
-    _onboardingViewmodel.start();
-  } // Bind ربط the viewmodel to the view and start the viewmodel to get the data from the repository and update the view
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  _bind() => _onboardingViewmodel.start();
+  // Bind ربط the viewmodel to the view and start the viewmodel to get the data from the repository and update the view
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
+                  _appPreferences.setOnBoardingScreenView();
                   Navigator.pushReplacementNamed(context, Routes.loginRoute);
                 },
                 child: Text(
