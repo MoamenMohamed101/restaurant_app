@@ -72,7 +72,8 @@ class RepositoryImpl extends Repository {
   Future<bool> isConnected() async => await _networkInfo.isConnected;
 
   // Handles the login API request and response processing
-  Future<Either<Failure, Authentication>> _handleLoginRequest( LoginRequests loginRequests) async {
+  Future<Either<Failure, Authentication>> _handleLoginRequest(
+      LoginRequests loginRequests) async {
     try {
       final AuthenticationResponse response =
           await _remoteDataSource.login(loginRequests);
@@ -85,7 +86,7 @@ class RepositoryImpl extends Repository {
   // Processes the API response and determines success or failure
   Either<Failure, Authentication> _processLoginResponse(
       AuthenticationResponse response) {
-    if (isSuccessfulLogin(response)) {
+    if (isSuccessfulAuthentication(response)) {
       return Right(response.toDomain()); // Convert to domain model
     } else {
       return Left(_createFailureFromAuthenticationResponse(response));
@@ -93,11 +94,12 @@ class RepositoryImpl extends Repository {
   }
 
   // Checks if the response indicates a successful operation
-  bool isSuccessfulLogin(AuthenticationResponse response) =>
+  bool isSuccessfulAuthentication(AuthenticationResponse response) =>
       response.status == ApiInternalStatus.success;
 
   // Creates a Failure object from an unsuccessful response
-  Failure _createFailureFromAuthenticationResponse(AuthenticationResponse response) {
+  Failure _createFailureFromAuthenticationResponse(
+      AuthenticationResponse response) {
     return Failure(
       ApiInternalStatus.failure,
       response.message ?? ResponseMessage.defaultError,
@@ -113,16 +115,19 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  Future<Either<Failure, String>> _handleForgetPasswordRequest(String email) async {
+  Future<Either<Failure, String>> _handleForgetPasswordRequest(
+      String email) async {
     try {
-      final ForgetPasswordResponse response = await _remoteDataSource.resetPassword(email);
+      final ForgetPasswordResponse response =
+          await _remoteDataSource.resetPassword(email);
       return _processForgetPasswordResponse(response);
     } catch (error) {
       return Left(ErrorHandler.handel(error).failure);
     }
   }
 
-  Either<Failure, String> _processForgetPasswordResponse(ForgetPasswordResponse response) {
+  Either<Failure, String> _processForgetPasswordResponse(
+      ForgetPasswordResponse response) {
     if (isSuccessReset(response)) {
       return Right(response.toDomain());
     } else {
@@ -130,12 +135,44 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  bool isSuccessReset(ForgetPasswordResponse response) => response.status == ApiInternalStatus.success;
+  bool isSuccessReset(ForgetPasswordResponse response) =>
+      response.status == ApiInternalStatus.success;
 
-  Failure _createFailureFromForgetPasswordResponse(ForgetPasswordResponse response) {
+  Failure _createFailureFromForgetPasswordResponse(
+      ForgetPasswordResponse response) {
     return Failure(
       ApiInternalStatus.failure,
       response.message ?? ResponseMessage.defaultError,
     );
+  }
+
+  @override
+  Future<Either<Failure, Authentication>> register(
+      RegisterRequests registerRequests) async {
+    if (await isConnected()) {
+      return await _handleRegisterRequest(registerRequests);
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  Future<Either<Failure, Authentication>> _handleRegisterRequest(
+      RegisterRequests registerRequests) async {
+    try {
+      final AuthenticationResponse response =
+          await _remoteDataSource.register(registerRequests);
+      return _processRegisterResponse(response);
+    } catch (error) {
+      return Left(ErrorHandler.handel(error).failure);
+    }
+  }
+
+  Either<Failure, Authentication> _processRegisterResponse(
+      AuthenticationResponse response) {
+    if (isSuccessfulAuthentication(response)) {
+      return Right(response.toDomain());
+    } else {
+      return Left(_createFailureFromAuthenticationResponse(response));
+    }
   }
 }

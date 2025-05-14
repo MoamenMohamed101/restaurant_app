@@ -5,13 +5,10 @@ import 'package:restaurant_app/presentation/common/freezed_data_classes.dart';
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer.dart';
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
 
-class LoginViewModel extends BaseViewModel
-    implements LoginViewmodelInputs, LoginViewmodelOutputs {
-  final StreamController<String> _userEmailController =
-          StreamController<String>.broadcast(),
-      _passwordEmailController = StreamController<String>.broadcast();
+class LoginViewModel extends BaseViewModel implements LoginViewmodelInputs, LoginViewmodelOutputs {
+  final StreamController<String> _userEmailController = StreamController<String>.broadcast(), _passwordEmailController = StreamController<String>.broadcast();
   final StreamController<void> _areAllInputsValidController =
-      StreamController<void>.broadcast();
+  StreamController<void>.broadcast();
   final StreamController<bool> isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
 
   var loginObject = LoginObject("", "");
@@ -56,13 +53,15 @@ class LoginViewModel extends BaseViewModel
   Sink get inputPassword => _passwordEmailController.sink;
 
   @override
-  Stream<bool> get outIsEmailValid => _userEmailController.stream.map(
-        (email) => _isEmailValid(email),
+  Stream<bool> get outIsEmailValid =>
+      _userEmailController.stream.map(
+            (email) => _isEmailValid(email),
       );
 
   @override
-  Stream<bool> get outIsPasswordValid => _passwordEmailController.stream.map(
-        (password) => _isPasswordValid(password),
+  Stream<bool> get outIsPasswordValid =>
+      _passwordEmailController.stream.map(
+            (password) => _isPasswordValid(password),
       );
 
   bool _isEmailValid(String email) {
@@ -83,9 +82,8 @@ class LoginViewModel extends BaseViewModel
         loginObject.email,
         loginObject.password,
       ),
-    ))
-        .fold(
-      (failure) {
+    )).fold(
+          (failure) {
         inputState.add(
           ErrorState(
             StateRendererType.popUpErrorState,
@@ -93,8 +91,7 @@ class LoginViewModel extends BaseViewModel
           ),
         );
         // debugPrint("The Failure code is ${failure.code} and The Failure message is ${failure.message}");
-      },
-      (success) {
+      },(success) {
         inputState.add(
           ContentState(),
         );
@@ -113,7 +110,7 @@ class LoginViewModel extends BaseViewModel
 
   bool _areAllInputsValid() =>
       _isEmailValid(loginObject.email) &&
-      _isPasswordValid(loginObject.password);
+          _isPasswordValid(loginObject.password);
 }
 
 abstract class LoginViewmodelInputs {

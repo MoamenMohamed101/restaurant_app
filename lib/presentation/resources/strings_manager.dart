@@ -17,7 +17,9 @@ class AppStrings {
   static const String password = "password";
   static const String passwordError = "Please enter a valid password";
   static const String login = "Login";
+  static const String register = "Register";
   static const String forgetPassword = "Forget Password";
+  static const String alReadyHaveAccount = "Already have an account? Login";
   static const String registerText = "Not a member ? Sign Up";
   static const String loading = "Loading....";
   static const String loadingLogin = "Loading....";
@@ -25,4 +27,11 @@ class AppStrings {
   static const String ok = "OK";
   static const String resetPassword = "Reset Password";
   static const String success = "Success";
+  static const String userNameError = "user name must be at least 8 characters";
+  static const String userName = "User Name";
+  static const String emailError = "Email format is wrong";
+  static const String mobileNumberError = "Mobile Number must be at least 10 digits";
+  static const String mobileNumber = "Mobile Number";
+  static const String passwordValid = "Password must be at least 6 characters";
+  static const String profileImage = "Profile Image";
 }

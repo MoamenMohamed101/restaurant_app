@@ -4,7 +4,7 @@ import 'package:restaurant_app/presentation/forget_password/view/forget_password
 import 'package:restaurant_app/presentation/login/view/login_view.dart';
 import 'package:restaurant_app/presentation/main/main_view.dart';
 import 'package:restaurant_app/presentation/onBoarding/view/onBoarding_view.dart';
-import 'package:restaurant_app/presentation/register/register_view.dart';
+import 'package:restaurant_app/presentation/register/view/register_view.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/splash/splash_view.dart';
 
@@ -35,6 +35,7 @@ class RouteGenerator {
           builder: (BuildContext context) => const LoginView(),
         );
       case Routes.registerRoute:
+        initRegisterModule();
         return MaterialPageRoute(
           builder: (BuildContext context) => const RegisterView(),
         );
