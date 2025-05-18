@@ -78,9 +78,9 @@ class _AppServicesClient implements AppServicesClient {
     String userName,
     String countryMobileCode,
     String mobileNumber,
-    String profilePicture,
     String email,
     String password,
+    String profilePicture,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -89,9 +89,9 @@ class _AppServicesClient implements AppServicesClient {
       'user_name': userName,
       'country_mobile_code': countryMobileCode,
       'mobile_number': mobileNumber,
-      'profile_picture': profilePicture,
       'email': email,
       'password': password,
+      'profile_picture': profilePicture,
     };
     final _options = _setStreamType<AuthenticationResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)

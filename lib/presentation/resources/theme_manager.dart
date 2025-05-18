@@ -7,8 +7,8 @@ import 'package:restaurant_app/presentation/resources/values_manager.dart';
 
 // This file is used to manage the theme of the application such as colors, text styles, etc.
 ThemeData getApplicationTheme() {
-  return ThemeData(
-    // main colors
+  return ThemeData(// main colors
+    useMaterial3: true,
     primaryColor: ColorManager.primaryColor,
     primaryColorLight: ColorManager.lightPrimary,
     primaryColorDark: ColorManager.darkPrimary,
@@ -76,6 +76,10 @@ ThemeData getApplicationTheme() {
       ),
       bodyLarge: getRegularTextStyle(color: ColorManager.grey1),
       bodySmall: getRegularTextStyle(color: ColorManager.grey),
+      titleSmall: getRegularTextStyle(
+        color: ColorManager.white,
+        fontSize: FontSizeManager.s16,
+      ),
     ),
     // Input decoration theme
     inputDecorationTheme: InputDecorationTheme(

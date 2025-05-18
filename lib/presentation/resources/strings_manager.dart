@@ -34,4 +34,8 @@ class AppStrings {
   static const String mobileNumber = "Mobile Number";
   static const String passwordValid = "Password must be at least 6 characters";
   static const String profileImage = "Profile Image";
+  static const String home = "Home";
+  static const String search = "Search";
+  static const String notification = "Notification";
+  static const String settings = "Settings";
 }

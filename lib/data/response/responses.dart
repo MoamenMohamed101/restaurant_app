@@ -14,7 +14,7 @@ class BaseResponse {
 
 @JsonSerializable()
 class CustomerResponse // this sub response will be inside the authentication response
-{
+    {
   @JsonKey(name: "id")
   String? id;
   @JsonKey(name: "name")
@@ -32,7 +32,7 @@ class CustomerResponse // this sub response will be inside the authentication re
 
 @JsonSerializable()
 class ContactsResponse // this sub response will be inside the authentication response
-{
+    {
   @JsonKey(name: "phone")
   String? phone;
   @JsonKey(name: "email")
@@ -50,7 +50,7 @@ class ContactsResponse // this sub response will be inside the authentication re
 
 @JsonSerializable()
 class AuthenticationResponse extends BaseResponse // this is the main response
-{
+    {
   @JsonKey(name: "customer")
   CustomerResponse? customerResponse;
   @JsonKey(name: "contacts")
@@ -77,6 +77,88 @@ class ForgetPasswordResponse extends BaseResponse {
   Map<String, dynamic> toJson() => _$ForgetPasswordResponseToJson(this);
 }
 
+@JsonSerializable()
+class ServiceResponse {
+  @JsonKey(name: "id")
+  String? id;
+  @JsonKey(name: "title")
+  String? title;
+  @JsonKey(name: "image")
+  String? image;
+
+  ServiceResponse(this.id, this.title, this.image);
+
+  factory ServiceResponse.fromJson(Map<String, dynamic> json) =>
+      _$ServiceResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ServiceResponseToJson(this);
+}
+
+@JsonSerializable()
+class BannersResponse {
+  @JsonKey(name: "id")
+  String? id;
+  @JsonKey(name: "link")
+  String? link;
+  @JsonKey(name: "title")
+  String? title;
+  @JsonKey(name: "image")
+  String? image;
+
+  BannersResponse(this.id, this.link, this.title, this.image);
+
+  factory BannersResponse.fromJson(Map<String, dynamic> json) =>
+      _$BannersResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BannersResponseToJson(this);
+}
+
+@JsonSerializable()
+class StoresResponse {
+  @JsonKey(name: "id")
+  String? id;
+  @JsonKey(name: "title")
+  String? title;
+  @JsonKey(name: "image")
+  String? image;
+
+  StoresResponse(this.id, this.title, this.image);
+
+  factory StoresResponse.fromJson(Map<String, dynamic> json) =>
+      _$StoresResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StoresResponseToJson(this);
+}
+
+@JsonSerializable()
+class HomeDateResponse {
+  @JsonKey(name: "services")
+  List<ServiceResponse>? services;
+  @JsonKey(name: "banners")
+  List<BannersResponse>? banners;
+  @JsonKey(name: "stores")
+  List<StoresResponse>? stores;
+
+  HomeDateResponse(this.services, this.banners, this.stores);
+
+  factory HomeDateResponse.fromJson(Map<String, dynamic> json) =>
+      _$HomeDateResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HomeDateResponseToJson(this);
+}
+
+@JsonSerializable()
+class HomeResponse extends BaseResponse {
+  @JsonKey(name: "data")
+  HomeDateResponse? data;
+
+  HomeResponse(this.data);
+
+  factory HomeResponse.fromJson(Map<String, dynamic> json) =>
+      _$HomeResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+}
 /*
 *  we created the AuthenticationResponse class to model a JSON response from an authentication API.
 *  It extends BaseResponse to inherit common fields like status and message, while containing CustomerResponse and ContactsResponse as nested objects.
