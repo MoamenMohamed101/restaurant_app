@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:restaurant_app/data/data_source/local_data_source.dart';
 import 'package:restaurant_app/data/data_source/remote_data_source.dart';
 import 'package:restaurant_app/data/mapper/mapper.dart';
 import 'package:restaurant_app/data/network/error_handler.dart';
@@ -55,8 +56,9 @@ class RepositoryImpl extends Repository {
   final RemoteDataSource
       _remoteDataSource; // Used to get the response from the remote data source
   final NetworkInfo _networkInfo; // The network info
+  final LocalDataSource _localDataSource;
 
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
+  RepositoryImpl(this._remoteDataSource, this._networkInfo,this._localDataSource);
 
   @override
   Future<Either<Failure, Authentication>> login(
@@ -177,10 +179,17 @@ class RepositoryImpl extends Repository {
 
   @override
   Future<Either<Failure, HomeObject>> getHomeData() async {
-    if (await isConnected()) {
-      return await _handleGetHomeDataRequest();
-    } else {
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    try{
+      // get response from cache
+      final response = await _localDataSource.getHomeData();
+      return Right(response.toDomain());
+    }catch(cacheError){
+      // cache is not existing or cache is expired
+      if (await isConnected()) {
+        return await _handleGetHomeDataRequest();
+      } else {
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
     }
   }
 
@@ -195,6 +204,7 @@ class RepositoryImpl extends Repository {
 
   Either<Failure, HomeObject> _processGetHomeDataResponse(HomeResponse response){
     if (isSuccessfulGetHomeData(response)) {
+      _localDataSource.saveHomeDataToCache(response);
       return Right(response.toDomain());
     } else {
       return Left(_createFailureFromHomeResponse(response));

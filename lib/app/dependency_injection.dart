@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:restaurant_app/app/app_pref.dart';
+import 'package:restaurant_app/data/data_source/local_data_source.dart';
 import 'package:restaurant_app/data/data_source/remote_data_source.dart';
 import 'package:restaurant_app/data/network/app_api.dart';
 import 'package:restaurant_app/data/network/dio_factory.dart';
@@ -42,8 +43,12 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImpl(instance<AppServicesClient>()));
 
-  instance.registerLazySingleton<Repository>(() =>
-      RepositoryImpl(instance<RemoteDataSource>(), instance<NetworkInfo>()));
+  instance.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
+
+  instance.registerLazySingleton<Repository>(() => RepositoryImpl(
+      instance<RemoteDataSource>(),
+      instance<NetworkInfo>(),
+      instance<LocalDataSource>()));
 }
 
 // This function has all the dependencies that are used in the login module.
@@ -91,10 +96,11 @@ initRegisterModule() {
 }
 
 initHomeModule() {
-  if (!GetIt.I.isRegistered<HomeUsecase>()) // This line checks if the LoginUseCase is already registered in the GetIt instance.
-      {
+  if (!GetIt.I.isRegistered<
+      HomeUsecase>()) // This line checks if the LoginUseCase is already registered in the GetIt instance.
+  {
     instance.registerFactory<HomeUsecase>(
-            () => HomeUsecase(instance<Repository>()));
+        () => HomeUsecase(instance<Repository>()));
     instance.registerFactory<HomeViewmodel>(() => HomeViewmodel(
           instance<HomeUsecase>(),
         ));
