@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
+import 'package:rxdart/rxdart.dart';
 abstract class BaseViewModel implements BaseViewModelInputs, BaseViewModelOutPuts {
-  final StreamController<FlowState> _inputStreamController = StreamController<FlowState>.broadcast();
+  final StreamController<FlowState> _inputStreamController = BehaviorSubject<FlowState>();
 
   @override
   Sink get inputState => _inputStreamController.sink;

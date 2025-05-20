@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/presentation/main/pages/home_page.dart';
-import 'package:restaurant_app/presentation/main/pages/notification_page.dart';
-import 'package:restaurant_app/presentation/main/pages/search_page.dart';
-import 'package:restaurant_app/presentation/main/pages/settings_page.dart';
+import 'package:restaurant_app/presentation/main/home/view/home_view.dart';
+import 'package:restaurant_app/presentation/main/notification/view/notification_view.dart';
+import 'package:restaurant_app/presentation/main/search/view/search_view.dart';
+import 'package:restaurant_app/presentation/main/settings/view/settings_view.dart';
 import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/resources/values_manager.dart';

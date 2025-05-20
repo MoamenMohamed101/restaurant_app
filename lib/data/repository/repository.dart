@@ -156,8 +156,7 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  Future<Either<Failure, Authentication>> _handleRegisterRequest(
-      RegisterRequests registerRequests) async {
+  Future<Either<Failure, Authentication>> _handleRegisterRequest(RegisterRequests registerRequests) async {
     try {
       final AuthenticationResponse response =
           await _remoteDataSource.register(registerRequests);
@@ -174,5 +173,42 @@ class RepositoryImpl extends Repository {
     } else {
       return Left(_createFailureFromAuthenticationResponse(response));
     }
+  }
+
+  @override
+  Future<Either<Failure, HomeObject>> getHomeData() async {
+    if (await isConnected()) {
+      return await _handleGetHomeDataRequest();
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  Future<Either<Failure, HomeObject>> _handleGetHomeDataRequest() async {
+    try {
+      final response = await _remoteDataSource.getHomeData();
+      return _processGetHomeDataResponse(response);
+    } catch (error) {
+      return Left(ErrorHandler.handel(error).failure);
+    }
+  }
+
+  Either<Failure, HomeObject> _processGetHomeDataResponse(HomeResponse response){
+    if (isSuccessfulGetHomeData(response)) {
+      return Right(response.toDomain());
+    } else {
+      return Left(_createFailureFromHomeResponse(response));
+    }
+  }
+
+  isSuccessfulGetHomeData(HomeResponse response){
+    return response.status == ApiInternalStatus.success;
+  }
+
+  _createFailureFromHomeResponse(HomeResponse response){
+    return Failure(
+      ApiInternalStatus.failure,
+      response.message ?? ResponseMessage.defaultError,
+    );
   }
 }

@@ -80,7 +80,7 @@ class ForgetPasswordResponse extends BaseResponse {
 @JsonSerializable()
 class ServiceResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "title")
   String? title;
   @JsonKey(name: "image")
@@ -97,7 +97,7 @@ class ServiceResponse {
 @JsonSerializable()
 class BannersResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "link")
   String? link;
   @JsonKey(name: "title")
@@ -116,7 +116,7 @@ class BannersResponse {
 @JsonSerializable()
 class StoresResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "title")
   String? title;
   @JsonKey(name: "image")
@@ -131,7 +131,7 @@ class StoresResponse {
 }
 
 @JsonSerializable()
-class HomeDateResponse {
+class HomeDataResponse {
   @JsonKey(name: "services")
   List<ServiceResponse>? services;
   @JsonKey(name: "banners")
@@ -139,18 +139,18 @@ class HomeDateResponse {
   @JsonKey(name: "stores")
   List<StoresResponse>? stores;
 
-  HomeDateResponse(this.services, this.banners, this.stores);
+  HomeDataResponse(this.services, this.banners, this.stores);
 
-  factory HomeDateResponse.fromJson(Map<String, dynamic> json) =>
-      _$HomeDateResponseFromJson(json);
+  factory HomeDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$HomeDataResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HomeDateResponseToJson(this);
+  Map<String, dynamic> toJson() => _$HomeDataResponseToJson(this);
 }
 
 @JsonSerializable()
 class HomeResponse extends BaseResponse {
   @JsonKey(name: "data")
-  HomeDateResponse? data;
+  HomeDataResponse? data;
 
   HomeResponse(this.data);
 

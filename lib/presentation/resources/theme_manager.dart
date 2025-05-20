@@ -80,6 +80,11 @@ ThemeData getApplicationTheme() {
         color: ColorManager.white,
         fontSize: FontSizeManager.s16,
       ),
+      labelSmall: getBoldTextStyle(
+        color: ColorManager.primaryColor,
+        fontSize: FontSizeManager.s12,
+      ),
+      headlineSmall: getRegularTextStyle(color: ColorManager.grey2,fontSize: FontSizeManager.s12),
     ),
     // Input decoration theme
     inputDecorationTheme: InputDecorationTheme(
