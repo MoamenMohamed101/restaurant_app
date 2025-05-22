@@ -58,7 +58,8 @@ class RepositoryImpl extends Repository {
   final NetworkInfo _networkInfo; // The network info
   final LocalDataSource _localDataSource;
 
-  RepositoryImpl(this._remoteDataSource, this._networkInfo,this._localDataSource);
+  RepositoryImpl(
+      this._remoteDataSource, this._networkInfo, this._localDataSource);
 
   @override
   Future<Either<Failure, Authentication>> login(
@@ -158,7 +159,8 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  Future<Either<Failure, Authentication>> _handleRegisterRequest(RegisterRequests registerRequests) async {
+  Future<Either<Failure, Authentication>> _handleRegisterRequest(
+      RegisterRequests registerRequests) async {
     try {
       final AuthenticationResponse response =
           await _remoteDataSource.register(registerRequests);
@@ -179,11 +181,11 @@ class RepositoryImpl extends Repository {
 
   @override
   Future<Either<Failure, HomeObject>> getHomeData() async {
-    try{
+    try {
       // get response from cache
       final response = await _localDataSource.getHomeData();
       return Right(response.toDomain());
-    }catch(cacheError){
+    } catch (cacheError) {
       // cache is not existing or cache is expired
       if (await isConnected()) {
         return await _handleGetHomeDataRequest();
@@ -202,7 +204,8 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  Either<Failure, HomeObject> _processGetHomeDataResponse(HomeResponse response){
+  Either<Failure, HomeObject> _processGetHomeDataResponse(
+      HomeResponse response) {
     if (isSuccessfulGetHomeData(response)) {
       _localDataSource.saveHomeDataToCache(response);
       return Right(response.toDomain());
@@ -211,11 +214,55 @@ class RepositoryImpl extends Repository {
     }
   }
 
-  isSuccessfulGetHomeData(HomeResponse response){
+  bool isSuccessfulGetHomeData(HomeResponse response) {
     return response.status == ApiInternalStatus.success;
   }
 
-  _createFailureFromHomeResponse(HomeResponse response){
+  _createFailureFromHomeResponse(HomeResponse response) {
+    return Failure(
+      ApiInternalStatus.failure,
+      response.message ?? ResponseMessage.defaultError,
+    );
+  }
+
+  @override
+  Future<Either<Failure, StoreDetails>> getStoreDetails() async {
+    try {
+      final response = _localDataSource.getStoresDataDetails();
+      return Right(response.toDomain());
+    } catch (error) {
+      if (await isConnected()) {
+        return await _handleGetStoreDetailsRequest();
+      } else {
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+  Future<Either<Failure, StoreDetails>> _handleGetStoreDetailsRequest() async {
+    try {
+      final response = await _remoteDataSource.getStoreDetails();
+      return _processGetStoreDetailsResponse(response);
+    } catch (error) {
+      return Left(ErrorHandler.handel(error).failure);
+    }
+  }
+
+  Either<Failure, StoreDetails> _processGetStoreDetailsResponse(
+      StoresDetailsResponse response) {
+    if (isSuccessfulGetStoreDetails(response)) {
+      _localDataSource.saveStoresDataToCache(response);
+      return Right(response.toDomain());
+    } else {
+      return Left(_createFailureFromStoreDetailsResponse(response));
+    }
+  }
+
+  bool isSuccessfulGetStoreDetails(StoresDetailsResponse response) {
+    return response.status == ApiInternalStatus.success;
+  }
+
+  _createFailureFromStoreDetailsResponse(StoresDetailsResponse response) {
     return Failure(
       ApiInternalStatus.failure,
       response.message ?? ResponseMessage.defaultError,

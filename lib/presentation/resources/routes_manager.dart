@@ -7,6 +7,8 @@ import 'package:restaurant_app/presentation/onBoarding/view/onBoarding_view.dart
 import 'package:restaurant_app/presentation/register/view/register_view.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/splash/splash_view.dart';
+import 'package:restaurant_app/presentation/store_details/view/store_details_view.dart';
+import 'package:restaurant_app/presentation/test_screen.dart';
 
 class Routes {
   static const String splashRoute = "/";
@@ -16,6 +18,7 @@ class Routes {
   static const String mainRoute = "/main";
   static const String onBoardingRoute = "/onBoardingRoute";
   static const String storeDetailsRoute = "/storeDetails";
+  static const String test = "/test";
 }
 
 class RouteGenerator {
@@ -48,6 +51,15 @@ class RouteGenerator {
         initHomeModule();
         return MaterialPageRoute(
           builder: (BuildContext context) => const MainView(),
+        );
+        case Routes.storeDetailsRoute:
+        initStoreDetailsModule();
+        return MaterialPageRoute(
+          builder: (BuildContext context) => StoreDetailsView(routeSettings.arguments as String),
+        );
+        case Routes.test:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const TestScreen(),
         );
       default:
         return unDefinedRoute();

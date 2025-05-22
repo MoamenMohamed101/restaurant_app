@@ -11,7 +11,8 @@ class AppStrings {
       "Tut app is an awesome flutter application using clean architecture #2";
   static const String onBoardingSubTitle3 =
       "Tut app is an awesome flutter application using clean architecture #3";
-  static const String onBoardingSubTitle4 = "Tut app is an awesome flutter application using clean architecture #4";
+  static const String onBoardingSubTitle4 =
+      "Tut app is an awesome flutter application using clean architecture #4";
   static const String userEmail = "user email";
   static const String userEmailError = "Please enter a valid email";
   static const String password = "password";
@@ -30,7 +31,8 @@ class AppStrings {
   static const String userNameError = "user name must be at least 8 characters";
   static const String userName = "User Name";
   static const String emailError = "Email format is wrong";
-  static const String mobileNumberError = "Mobile Number must be at least 10 digits";
+  static const String mobileNumberError =
+      "Mobile Number must be at least 10 digits";
   static const String mobileNumber = "Mobile Number";
   static const String passwordValid = "Password must be at least 6 characters";
   static const String profileImage = "Profile Image";
@@ -40,4 +42,7 @@ class AppStrings {
   static const String settings = "Settings";
   static const String services = "Services";
   static const String stores = "Stores";
+  static const String details = "Details";
+  static const String aboutStore = "About Store";
+  static const String storeDetails = "Store Details";
 }

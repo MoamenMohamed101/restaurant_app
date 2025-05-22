@@ -159,6 +159,26 @@ class HomeResponse extends BaseResponse {
 
   Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
 }
+
+@JsonSerializable()
+class StoresDetailsResponse extends BaseResponse {
+  @JsonKey(name: "id")
+  int? id;
+  @JsonKey(name: "title")
+  String? title;
+  @JsonKey(name: "details")
+  String? details;
+  @JsonKey(name: "services")
+  String? services;
+  @JsonKey(name: "about")
+  String? about;
+
+  StoresDetailsResponse(this.id, this.title, this.details, this.services, this.about);
+  factory StoresDetailsResponse.fromJson(Map<String, dynamic> json) =>
+      _$StoresDetailsResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StoresDetailsResponseToJson(this);
+}
 /*
 *  we created the AuthenticationResponse class to model a JSON response from an authentication API.
 *  It extends BaseResponse to inherit common fields like status and message, while containing CustomerResponse and ContactsResponse as nested objects.

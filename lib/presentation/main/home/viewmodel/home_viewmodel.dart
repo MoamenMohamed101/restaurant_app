@@ -13,13 +13,6 @@ class HomeViewmodel extends BaseViewModel
 
   HomeViewmodel(this._homeUsecase);
 
-  // final StreamController<List<BannerAd>> _bannerAdController =
-  //     BehaviorSubject<List<BannerAd>>();
-  // final StreamController<List<Store>> _storeController =
-  //     BehaviorSubject<List<Store>>();
-  // final StreamController<List<Service>> _serviceController =
-  //     BehaviorSubject<List<Service>>();
-
   final StreamController<HomeViewObject> _homeObjectController =
       BehaviorSubject<HomeViewObject>();
 
@@ -29,9 +22,6 @@ class HomeViewmodel extends BaseViewModel
   @override
   void dispose() {
     super.dispose();
-    // _bannerAdController.close();
-    // _storeController.close();
-    // _serviceController.close();
     _homeObjectController.close();
   }
 

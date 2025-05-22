@@ -8,6 +8,8 @@ import 'package:restaurant_app/presentation/resources/color_manager.dart';
 import 'package:restaurant_app/presentation/resources/routes_manager.dart';
 import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 import 'package:restaurant_app/presentation/resources/values_manager.dart';
+import 'package:restaurant_app/presentation/store_details/view/store_details_view.dart';
+import 'package:restaurant_app/presentation/test_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
     return Container();
   }
 
-  _getSection(String title) {
+  Padding _getSection(String title) {
     return Padding(
       padding: const EdgeInsets.only(
         top: AppPadding.p12,
@@ -121,7 +123,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getStoresWidget(List<Store>? stores) {
-    if (stores != null) {
+    if (stores != null && stores.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.only(
             left: AppPadding.p12, right: AppPadding.p12, top: AppPadding.p12),
@@ -132,17 +134,23 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: AppSize.s2,
               crossAxisSpacing: AppSize.s8,
               mainAxisSpacing: AppSize.s8,
-              physics: const ScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: List.generate(
                 stores.length,
                 (index) => InkWell(
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(Routes.storeDetailsRoute),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      Routes.storeDetailsRoute,
+                      arguments: stores[index].image,
+                    );
+                  },
                   child: Card(
                     elevation: AppSize.s4,
-                    child:
-                        Image.network(stores[index].image, fit: BoxFit.cover),
+                    child: Image.network(
+                      stores[index].image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

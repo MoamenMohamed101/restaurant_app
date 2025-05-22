@@ -3,11 +3,17 @@ import 'package:restaurant_app/data/response/responses.dart';
 
 const CACHE_HOME_KEY = "CACHE_HOME_KEY";
 const CACHE_HOME_INTERNAL = 60 * 1000; // 1 min
+const CACHE_STORES_KEY = "CACHE_STORES_KEY";
+const CACHE_STORES_INTERNAL = 60 * 1000; // 1 min
 
 abstract class LocalDataSource {
   Future<HomeResponse> getHomeData();
 
   Future<void> saveHomeDataToCache(HomeResponse homeResponse);
+
+  StoresDetailsResponse getStoresDataDetails();
+
+  Future<void> saveStoresDataToCache(StoresDetailsResponse storesDetailsResponse);
 
   void clearCache();
 
@@ -36,6 +42,21 @@ class LocalDataSourceImpl implements LocalDataSource {
 
   @override
   void removeFromCache(String key) => cacheMap.remove(key);
+
+  @override
+  StoresDetailsResponse getStoresDataDetails() {
+    CachedItem? cachedItem = cacheMap[CACHE_STORES_KEY];
+    if (cachedItem != null && cachedItem.isValid(CACHE_STORES_INTERNAL)) {
+      return cachedItem.data;
+    }else {
+      throw ErrorHandler.handel(DataSource.CACHE_ERROR);
+    }
+  }
+
+  @override
+  Future<void> saveStoresDataToCache(StoresDetailsResponse storesDetailsResponse) async{
+    cacheMap[CACHE_STORES_KEY] = CachedItem(storesDetailsResponse);
+  }
 }
 
 class CachedItem {

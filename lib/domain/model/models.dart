@@ -79,3 +79,13 @@ class HomeObject {
 
   HomeObject(this.data);
 }
+
+class StoreDetails {
+  int id;
+  String title;
+  String details;
+  String services;
+  String about;
+
+  StoreDetails(this.id, this.title, this.details, this.services, this.about);
+}
