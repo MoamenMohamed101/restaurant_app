@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      AppStrings.alReadyHaveAccount,
+                      AppStrings.alReadyHaveAccount.tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -150,7 +151,7 @@ class _RegisterViewState extends State<RegisterView> {
             controller: _mobileNumberController,
             decoration: InputDecoration(
               errorText: snapshot.data,
-              hintText: AppStrings.mobileNumber,
+              hintText: AppStrings.mobileNumber.tr(),
               icon: const Icon(Icons.phone),
             ),
           );
@@ -197,9 +198,9 @@ class _RegisterViewState extends State<RegisterView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.userEmail,
+              labelText: AppStrings.userEmail.tr(),
               errorText: snapshot.data,
-              hintText: AppStrings.userEmail,
+              hintText: AppStrings.userEmail.tr(),
               icon: const Icon(Icons.email),
             ),
             controller: _emailController,
@@ -220,7 +221,7 @@ class _RegisterViewState extends State<RegisterView> {
           return TextFormField(
             decoration: InputDecoration(
               errorText: snapshot.data,
-              hintText: AppStrings.userName,
+              hintText: AppStrings.userName.tr(),
               icon: const Icon(Icons.person),
             ),
             controller: _userNameController,
@@ -240,9 +241,9 @@ class _RegisterViewState extends State<RegisterView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.password,
+              labelText: AppStrings.password.tr(),
               errorText: snapshot.data,
-              hintText: AppStrings.password,
+              hintText: AppStrings.password.tr(),
               icon: const Icon(Icons.password),
             ),
             controller: _passwordController,
@@ -281,7 +282,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Flexible(child: Text(AppStrings.profileImage)),
+          Flexible(child: Text(AppStrings.profileImage.tr())),
           Flexible(
               child: StreamBuilder<File>(
             stream: _viewModel.outputProfilePicture,
@@ -319,7 +320,7 @@ class _RegisterViewState extends State<RegisterView> {
                       _viewModel.register();
                     }
                   : null, // if snapshot.data is true, call the register method
-              child: const Text(AppStrings.register),
+              child: Text(AppStrings.register.tr()),
             ),
           );
         },
@@ -337,7 +338,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: const Icon(Icons.arrow_forward),
                 leading: const Icon(Icons.browse_gallery),
-                title: const Text(AppStrings.profileImage),
+                title: Text(AppStrings.profileImage.tr()),
                 onTap: () {
                   _imageFromGallery();
                   Navigator.of(context).pop();

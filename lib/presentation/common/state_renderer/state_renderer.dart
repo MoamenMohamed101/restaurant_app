@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer_impl.dart';
@@ -49,7 +50,7 @@ class StateRenderer extends StatelessWidget {
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.errorState),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok, context),
+          _getRetryButton(AppStrings.ok.tr(), context),
         ]);
       case StateRendererType.fullScreenLoadingState:
         return _getItemsColum([
@@ -60,7 +61,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsColum([
           _getAnimatedImage(JsonAssets.errorState),
           _getMessage(message),
-          _getRetryButton(AppStrings.retryAgain, context),
+          _getRetryButton(AppStrings.retryAgain.tr(), context),
         ]);
       case StateRendererType.fullScreenEmptyState:
         return _getItemsColum([
@@ -74,7 +75,7 @@ class StateRenderer extends StatelessWidget {
           _getAnimatedImage(JsonAssets.successState),
           _getMessage(title),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok, context),
+          _getRetryButton(AppStrings.ok.tr(), context),
         ]);
     }
   }

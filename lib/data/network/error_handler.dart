@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:restaurant_app/data/network/failure.dart';
+import 'package:restaurant_app/presentation/resources/strings_manager.dart';
 
 class ErrorHandler implements Exception {
   late Failure failure;
@@ -25,12 +27,13 @@ Failure _handelError(DioException error) {
       return DataSource.BAD_REQUEST.getFailure();
     case DioExceptionType.badResponse:
       if (error.response!.statusCode != null &&
-          error.response!.statusMessage != null && error.response != null) {
+          error.response!.statusMessage != null &&
+          error.response != null) {
         return Failure(
           error.response!.statusCode!,
           error.response!.statusMessage!,
         );
-      }else {
+      } else {
         return DataSource.DEFAULT.getFailure();
       }
     case DioExceptionType.cancel:
@@ -121,28 +124,26 @@ class ResponseCode {
 }
 
 class ResponseMessage {
-  static const String success = "success with data";
-  static const String noContent = "success with no content";
-  static const String badRequest = "failure due to client error";
-  static const String unauthorised = "failure due to user not being authorised";
-  static const String forbidden = "failure due to user being forbidden";
-  static const String internalServerError =
-      "failure due to internal server error";
-  static const String notFound = "failure due to not found";
+  static String success = AppStrings.success.tr();
+  static String noContent = AppStrings.noContent.tr();
+  static String badRequest = AppStrings.badRequestError.tr();
+  static String unauthorised = AppStrings.unauthorizedError.tr();
+  static String forbidden = AppStrings.forbiddenError.tr();
+  static String internalServerError = AppStrings.internalServerError.tr();
+  static String notFound = AppStrings.notFoundError.tr();
 
 // local status codes
-  static const String connectTimeout = "Timeout Error, Try again later";
-  static const String cancel = "Request Cancelled, Try again later";
-  static const String receiveTimeout = "Timeout Error, Try again later";
-  static const String sendTimeout = "Timeout Error, Try again later";
-  static const String cancelError = "Timeout Error, Try again later";
-  static const String cacheError = "Cache Error, Try again later";
-  static const String noInternetConnection =
-      "Please check your internet connection";
-  static const String defaultError = "Something went wrong, Try again later";
+  static String connectTimeout = AppStrings.timeoutError.tr();
+  static String cancel = AppStrings.defaultError.tr();
+  static String receiveTimeout = AppStrings.timeoutError.tr();
+  static String sendTimeout = AppStrings.timeoutError.tr();
+  static String cancelError = AppStrings.defaultError.tr();
+  static String cacheError = AppStrings.cacheError.tr();
+  static String noInternetConnection = AppStrings.noInternetError.tr();
+  static String defaultError = AppStrings.defaultError.tr();
 }
 
-class ApiInternalStatus{
+class ApiInternalStatus {
   static const int success = 0;
   static const int failure = 1;
 }

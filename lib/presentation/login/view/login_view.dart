@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:restaurant_app/app/app_pref.dart';
@@ -112,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: () => Navigator.pushNamed(
                             context, Routes.forgetPasswordRoute),
                         child: Text(
-                          AppStrings.forgetPassword,
+                          AppStrings.forgetPassword.tr(),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -120,7 +121,7 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: () => Navigator.pushNamed(
                             context, Routes.registerRoute),
                         child: Text(
-                          AppStrings.registerText,
+                          AppStrings.registerText.tr(),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       )
@@ -147,7 +148,7 @@ class _LoginViewState extends State<LoginView> {
               onPressed: (snapshot.data ?? false)
                   ? () => _loginViewmodel.login()
                   : null, // if snapshot.data is true, call the login method
-              child: const Text(AppStrings.login),
+              child: Text(AppStrings.login.tr()),
             ),
           );
         },
@@ -164,10 +165,10 @@ class _LoginViewState extends State<LoginView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.password,
+              labelText: AppStrings.password.tr(),
               errorText:
-                  (snapshot.data ?? true) ? null : AppStrings.passwordError,
-              hintText: AppStrings.password,
+                  (snapshot.data ?? true) ? null : AppStrings.passwordError.tr(),
+              hintText: AppStrings.password.tr(),
               icon: const Icon(Icons.password),
             ),
             controller: _passwordController,
@@ -193,11 +194,11 @@ class _LoginViewState extends State<LoginView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.userEmail,
+              labelText: AppStrings.userEmail.tr(),
               errorText:
-                  (snapshot.data ?? true) ? null : AppStrings.userEmailError,
+                  (snapshot.data ?? true) ? null : AppStrings.userEmailError.tr(),
               // if snapshot.data is true, return null to hide the error, if not return AppStrings.userNameError
-              hintText: AppStrings.userEmail,
+              hintText: AppStrings.userEmail.tr(),
               icon: const Icon(Icons.email),
             ),
             controller: _emailController,

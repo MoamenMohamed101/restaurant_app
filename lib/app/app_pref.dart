@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:restaurant_app/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +21,27 @@ class AppPreferences {
     return LanguageType.ENGLISH.getValue();
   }
 
+  Future<void> changeAppLanguage() async {
+    String currentLanguage = await getAppLanguage();
+
+    if (currentLanguage == LanguageType.ARABIC.getValue()) {
+      _sharedPreferences.setString(
+          pressKeyLanguage, LanguageType.ENGLISH.getValue());
+    } else {
+      _sharedPreferences.setString(
+          pressKeyLanguage, LanguageType.ARABIC.getValue());
+    }
+  }
+
+  Future<Locale> getLocal() async {
+    String currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.ARABIC.getValue()) {
+      return arabicLocal;
+    } else {
+      return englishLocal;
+    }
+  }
+
   Future<void> setOnBoardingScreenView() async {
     _sharedPreferences.setBool(pressKeyOnBoardingScreenView, true);
   }
@@ -33,5 +56,9 @@ class AppPreferences {
 
   Future<bool> isUserLoggedIn() async {
     return _sharedPreferences.getBool(pressKeyIsUserLoggedIn) ?? false;
+  }
+
+  Future<void> logOut() async {
+    _sharedPreferences.remove(pressKeyIsUserLoggedIn);
   }
 }

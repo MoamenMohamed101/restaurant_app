@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/presentation/forget_password/view/forget_password_view.dart';
@@ -52,12 +53,13 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (BuildContext context) => const MainView(),
         );
-        case Routes.storeDetailsRoute:
+      case Routes.storeDetailsRoute:
         initStoreDetailsModule();
         return MaterialPageRoute(
-          builder: (BuildContext context) => StoreDetailsView(routeSettings.arguments as String),
+          builder: (BuildContext context) =>
+              StoreDetailsView(routeSettings.arguments as String),
         );
-        case Routes.test:
+      case Routes.test:
         return MaterialPageRoute(
           builder: (BuildContext context) => const TestScreen(),
         );
@@ -70,10 +72,10 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(AppStrings.noRouteFound),
+          title: Text(AppStrings.noRouteFound.tr()),
         ),
-        body: const Center(
-          child: Text(AppStrings.noRouteFound),
+        body: Center(
+          child: Text(AppStrings.noRouteFound.tr()),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:restaurant_app/app/functions.dart';
 import 'package:restaurant_app/domain/usecase/register_usecase.dart';
 import 'package:restaurant_app/presentation/base/base_view_model.dart';
@@ -81,7 +82,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorEmail => outputIsEmail
-      .map((isEmailValid) => isEmailValid ? null : AppStrings.emailError);
+      .map((isEmailValid) => isEmailValid ? null : AppStrings.emailError.tr());
 
   @override
   Stream<bool> get outputIsMobileNumber => _mobileNumberStreamController.stream
@@ -90,7 +91,7 @@ class RegisterViewModel extends BaseViewModel
   @override
   Stream<String?> get outputErrorMobileNumber =>
       outputIsMobileNumber.map((isMobileNumberValid) =>
-          isMobileNumberValid ? null : AppStrings.mobileNumberError);
+          isMobileNumberValid ? null : AppStrings.mobileNumberError.tr());
 
   @override
   Stream<bool> get outputIsPassword => _passwordStreamController.stream
@@ -98,7 +99,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorPassword => outputIsPassword.map(
-      (isPasswordValid) => isPasswordValid ? null : AppStrings.passwordValid);
+      (isPasswordValid) => isPasswordValid ? null : AppStrings.passwordValid.tr());
 
   @override
   Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
@@ -106,7 +107,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorUserName => outputIsUserNameValid.map(
-      (isUserNameValid) => isUserNameValid ? null : AppStrings.userNameError);
+      (isUserNameValid) => isUserNameValid ? null : AppStrings.userNameError.tr());
 
   // Setters
   @override

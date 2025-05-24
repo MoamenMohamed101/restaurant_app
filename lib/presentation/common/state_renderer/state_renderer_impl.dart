@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/app/constants.dart';
 import 'package:restaurant_app/presentation/common/state_renderer/state_renderer.dart';
@@ -22,7 +23,7 @@ class LoadingState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 
   @override
-  String getMessage() => message ?? AppStrings.loading;
+  String getMessage() => message ?? AppStrings.loading.tr();
 }
 
 class ErrorState extends FlowState {
@@ -110,7 +111,7 @@ extension FlowStateExtension on FlowState {
           message: getMessage(),
         );
         case SuccessState _:
-        showPopup(context, getStateRendererType(), getMessage(),title: AppStrings.success);
+        showPopup(context, getStateRendererType(), getMessage(),title: AppStrings.success.tr());
         Navigator.pop(context);
         return contentScreen;
       default:

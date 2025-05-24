@@ -1,48 +1,61 @@
 class AppStrings {
-  static const String noRouteFound = "No Route Found";
-  static const String onBoardingTitle1 = "SEE THE BEST COURSE #1";
-  static const String onBoardingTitle2 = "SEE THE BEST COURSE #2";
-  static const String onBoardingTitle3 = "SEE THE BEST COURSE #3";
-  static const String onBoardingTitle4 = "SEE THE BEST COURSE #4";
-  static const String skip = "Skip";
-  static const String onBoardingSubTitle1 =
-      "Tut app is an awesome flutter application using clean architecture #1";
-  static const String onBoardingSubTitle2 =
-      "Tut app is an awesome flutter application using clean architecture #2";
-  static const String onBoardingSubTitle3 =
-      "Tut app is an awesome flutter application using clean architecture #3";
-  static const String onBoardingSubTitle4 =
-      "Tut app is an awesome flutter application using clean architecture #4";
-  static const String userEmail = "user email";
-  static const String userEmailError = "Please enter a valid email";
-  static const String password = "password";
-  static const String passwordError = "Please enter a valid password";
-  static const String login = "Login";
-  static const String register = "Register";
-  static const String forgetPassword = "Forget Password";
-  static const String alReadyHaveAccount = "Already have an account? Login";
-  static const String registerText = "Not a member ? Sign Up";
-  static const String loading = "Loading....";
-  static const String loadingLogin = "Loading....";
-  static const String retryAgain = "Retry Again";
-  static const String ok = "OK";
-  static const String resetPassword = "Reset Password";
-  static const String success = "Success";
-  static const String userNameError = "user name must be at least 8 characters";
-  static const String userName = "User Name";
-  static const String emailError = "Email format is wrong";
-  static const String mobileNumberError =
-      "Mobile Number must be at least 10 digits";
-  static const String mobileNumber = "Mobile Number";
-  static const String passwordValid = "Password must be at least 6 characters";
-  static const String profileImage = "Profile Image";
-  static const String home = "Home";
-  static const String search = "Search";
-  static const String notification = "Notification";
-  static const String settings = "Settings";
-  static const String services = "Services";
-  static const String stores = "Stores";
-  static const String details = "Details";
-  static const String aboutStore = "About Store";
-  static const String storeDetails = "Store Details";
+  static const String noRouteFound = "no_route_found";
+  static const String onBoardingTitle1 = "on_boarding_title1";
+  static const String onBoardingTitle2 = "on_boarding_title2";
+  static const String onBoardingTitle3 = "on_boarding_title3";
+  static const String onBoardingTitle4 = "on_boarding_title4";
+
+  static const String onBoardingSubTitle1 = "on_boarding_desc1";
+  static const String onBoardingSubTitle2 = "on_boarding_desc2";
+  static const String onBoardingSubTitle3 = "on_boarding_desc3";
+  static const String onBoardingSubTitle4 = "on_boarding_desc4";
+
+  static const String skip = "skip";
+  static const String userEmail = "email_hint";
+  static const String userEmailError = "invalid_email";
+  static const String password = "password_hint";
+  static const String passwordError = "invalid_password";
+  static const String login = "login_button";
+  static const String register = "register";
+  static const String forgetPassword = "forgot_password_text";
+  static const String alReadyHaveAccount = "already_have_account";
+  static const String registerText = "register_text";
+  static const String loading = "loading";
+  static const String retryAgain = "retry_again";
+  static const String ok = "ok";
+  static const String resetPassword = "reset_password";
+  static const String success = "success";
+  static const String userNameError = "invalid_user_name";
+  static const String userName = "username_hint";
+  static const String emailError = "invalid_email";
+  static const String mobileNumberError = "invalid_mobile_number";
+  static const String mobileNumber = "mobile_number_hint";
+  static const String passwordValid = "invalid_password";
+  static const String profileImage =
+      "upload_profile_pictuSearchre"; // Might be a typo in JSON key
+  static const String home = "home";
+  static const String search = "search";
+  static const String notification = "notification";
+  static const String settings = "settings";
+  static const String services = "services";
+  static const String stores = "stores";
+  static const String details = "details";
+  static const String aboutStore = "about";
+  static const String storeDetails = "store_details";
+  static const String contactUs = "contact_us";
+  static const String changeLanguage = "change_language";
+  static const String inviteFriends = "invite_your_friends";
+  static const String logout = "logout";
+  static const String badRequestError = "bad_request_error";
+  static const String noContent = "no_content";
+  static const String forbiddenError = "forbidden_error";
+  static const String unauthorizedError = "unauthorized_error";
+  static const String notFoundError = "not_found_error";
+  static const String conflictError = "conflict_error";
+  static const String internalServerError = "internal_server_error";
+  static const String unknownError = "unknown_error";
+  static const String timeoutError = "timeout_error";
+  static const String defaultError = "default_error";
+  static const String cacheError = "cache_error";
+  static const String noInternetError = "no_internet_error";
 }

@@ -15,7 +15,7 @@ ThemeData getApplicationTheme() {
     disabledColor: ColorManager.grey1, // what is disabled button? it is the color of the button when it is not clickable
     splashColor: ColorManager.primaryColor, // what is splash color? it is the color of the button when it is clicked
     // card theme
-    cardTheme: const CardTheme(
+    cardTheme:  const CardThemeData(
       color: ColorManager.white,
       shadowColor: ColorManager.darkGrey,
       elevation: AppSize.s4,

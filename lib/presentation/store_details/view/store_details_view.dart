@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
 import 'package:restaurant_app/domain/model/models.dart';
@@ -39,7 +40,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.storeDetails, textAlign: TextAlign.center),
+        title: Text(AppStrings.storeDetails.tr(), textAlign: TextAlign.center),
         backgroundColor: ColorManager.primaryColor,
       ),
       body: StreamBuilder<FlowState>(
@@ -60,11 +61,11 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _getImageWidget(widget.image),
-            _getSection(AppStrings.details),
+            _getSection(AppStrings.details.tr()),
             _getDetailsWidget(snapshot.data?.details),
-            _getSection(AppStrings.services),
+            _getSection(AppStrings.services.tr()),
             _getServicesWidget(snapshot.data?.services),
-            _getSection(AppStrings.aboutStore),
+            _getSection(AppStrings.aboutStore.tr()),
             _getAboutWidget(snapshot.data?.about),
           ],
         ),

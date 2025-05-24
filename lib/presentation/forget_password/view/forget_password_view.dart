@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:restaurant_app/app/dependency_injection.dart';
@@ -92,10 +93,10 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
-              labelText: AppStrings.userEmail,
+              labelText: AppStrings.userEmail.tr(),
               errorText:
-                  (snapshot.data ?? true) ? null : AppStrings.userEmailError,
-              hintText: AppStrings.userEmail,
+                  (snapshot.data ?? true) ? null : AppStrings.userEmailError.tr(),
+              hintText: AppStrings.userEmail.tr(),
             ),
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -119,7 +120,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
               onPressed: (snapshot.data ?? false)
                   ? () => _forgetPasswordViewmodel.resetPassWord()
                   : null,
-              child: const Text(AppStrings.resetPassword),
+              child: Text(AppStrings.resetPassword.tr()),
             ),
           );
         },
